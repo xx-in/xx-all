@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-fade-in: fade-in 0.5s;
+  --animate-fade-out: fade-out 0.5s;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-1.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(-1.5rem);
+    }
+  }
+}
+
+/* 移除原生 number 类型输入框的上下箭头 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
