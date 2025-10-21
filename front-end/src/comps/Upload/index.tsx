@@ -10,7 +10,7 @@ import {
 } from "@/utils";
 import { twMerge } from "tailwind-merge";
 import { Button } from "../Button";
-import { For, Show, type JSX } from "solid-js";
+import { For, Match, Show, Switch, type JSX } from "solid-js";
 import { Flex } from "@/comps/Flex";
 import { Svg } from "../Svg";
 import { Grid } from "../Grid";
@@ -149,14 +149,14 @@ function FileList(
   function handlePreview(file: File) {
     previewDialogVisible.set(true);
     // const url = fileToUrl(file);
-    previewSrc.set(file);
+    previewFile.set(file);
   }
 
   const previewDialogVisible = useSignal(false);
-  const previewSrc = useSignal<File | null>(null);
+  const previewFile = useSignal<File | null>(null);
 
-  const info = useSignal(() => {
-    const file = previewSrc.get();
+  const previewFileInfo = useSignal(() => {
+    const file = previewFile.get();
     if (file) {
       const type = file.type;
       const url = fileToUrl(file);
@@ -221,15 +221,27 @@ function FileList(
           </For>
         </Grid>
       </div>
-      <Dialog visible={previewDialogVisible} title="预览">
-        <Show
-          when={!info.get().type?.includes("pdf")}
-          fallback=<iframe src={info.get().url} width="100%" height="100%"></iframe>
-        >
-          <Show when={isImage(info.get().type)} fallback="暂未支持类型">
-            <img src={info.get().url} class="mx-auto size-full object-contain" />
-          </Show>
-        </Show>
+      <Dialog visible={previewDialogVisible} title="文件预览">
+        <Switch>
+          <Match when={previewFileInfo.get().type?.includes("pdf")}>
+            <iframe src={previewFileInfo.get().url} width="100%" height="100%"></iframe>
+          </Match>
+          <Match when={isImage(previewFileInfo.get().type)}>
+            <img src={previewFileInfo.get().url} class="mx-auto size-full object-contain" />
+          </Match>
+          <Match when={true}>
+            <Flex class="w-full flex-col justify-center gap-4">
+              <div>暂未支持预览的文件</div>
+              <a
+                href={previewFileInfo.get().url}
+                download={previewFile.get()?.name}
+                class="text-blue-500 underline underline-offset-2"
+              >
+                下载 {previewFile.get()?.name}
+              </a>
+            </Flex>
+          </Match>
+        </Switch>
       </Dialog>
     </>
   );
