@@ -11,6 +11,8 @@ import { Clear } from "./Clear";
 import { Calendar } from "./Calendar";
 import { Document } from "./Document";
 import { Delete } from "./Delete";
+import { Download } from "./Download";
+import { FullScreen } from "./FullScreen";
 
 export interface ISvgProps {
   children: Children;
@@ -37,7 +39,6 @@ export function Svg(props: IProps<ISvgProps>) {
 }
 
 Svg.Calendar = Calendar;
-
 Svg.Search = Search;
 Svg.Success = Success;
 Svg.Fail = Fail;
@@ -45,7 +46,8 @@ Svg.Info = Info;
 Svg.Warning = Warning;
 Svg.EyeClosed = EyeClosed;
 Svg.EyeOpened = EyeOpened;
-// Svg.Calendar = Calendar;
 Svg.Clear = Clear;
 Svg.Document = Document;
 Svg.Delete = Delete;
+Svg.Download = Download;
+Svg.FullScreen = FullScreen;

@@ -186,6 +186,10 @@ function FileList(
     return Object.values(map).includes(type);
   }
 
+  function handleJump() {
+    window.open(previewFileInfo.get().url, "_blank");
+  }
+
   return (
     <>
       <div>
@@ -222,26 +226,32 @@ function FileList(
         </Grid>
       </div>
       <Dialog visible={previewDialogVisible} title="文件预览">
-        <Switch>
-          <Match when={previewFileInfo.get().type?.includes("pdf")}>
-            <iframe src={previewFileInfo.get().url} width="100%" height="100%"></iframe>
-          </Match>
-          <Match when={isImage(previewFileInfo.get().type)}>
-            <img src={previewFileInfo.get().url} class="mx-auto size-full object-contain" />
-          </Match>
-          <Match when={true}>
-            <Flex class="w-full flex-col justify-center gap-4">
-              <div>暂未支持预览的文件</div>
-              <a
-                href={previewFileInfo.get().url}
-                download={previewFile.get()?.name}
-                class="text-blue-500 underline underline-offset-2"
-              >
-                下载 {previewFile.get()?.name}
-              </a>
-            </Flex>
-          </Match>
-        </Switch>
+        <div class="relative size-full">
+          <Switch>
+            <Match when={previewFileInfo.get().type?.includes("pdf")}>
+              <iframe src={previewFileInfo.get().url} width="100%" height="100%"></iframe>
+            </Match>
+            <Match when={isImage(previewFileInfo.get().type)}>
+              <img src={previewFileInfo.get().url} class="mx-auto size-full object-contain" />
+            </Match>
+            <Match when={true}>
+              <Flex class="w-full flex-col justify-center gap-4 py-10">
+                <div>暂未支持预览的文件</div>
+                <a
+                  href={previewFileInfo.get().url}
+                  download={previewFile.get()?.name}
+                  class="text-blue-500 underline underline-offset-2"
+                >
+                  下载 {previewFile.get()?.name}
+                </a>
+              </Flex>
+            </Match>
+          </Switch>
+          <Svg.FullScreen
+            class="absolute right-5 bottom-5 size-5 cursor-pointer text-gray-300"
+            onClick={handleJump}
+          />
+        </div>
       </Dialog>
     </>
   );
