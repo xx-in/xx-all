@@ -135,6 +135,6 @@ type RequiredFromOptional<T> = {
  */
 type NonUndefined<T> = Exclude<T, undefined>;
 
-export type Children = JSX.Element;
+export type Children = JSX.Element | Element;
 
 export type ClassName = ClassNameValue;

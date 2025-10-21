@@ -9,7 +9,8 @@ export function fileToBase64(file: File): Promise<string> {
     // 读取完成
     reader.onload = () => {
       const base64 = reader.result;
-      resolve(`${file.name},${base64}`);
+      // 特别注意，
+      resolve(`${encodeURIComponent(file.name)},${base64}`);
     };
 
     reader.onerror = err => reject(err);
@@ -27,7 +28,7 @@ export function base64ToFile(base64: string) {
     array[i] = binary.charCodeAt(i);
   }
 
-  return new File([array], filename, {
+  return new File([array], decodeURIComponent(filename), {
     type: getMimeFromBase64(mimeType),
   });
 }

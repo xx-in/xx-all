@@ -16,8 +16,6 @@ export function Grid(props: IProps<IGridProps>) {
     class: "",
   });
 
-  console.log("??flex", children);
-
   const baseClass = twMerge(["grid items-center"]);
 
   return (

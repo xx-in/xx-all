@@ -47,15 +47,29 @@ export function ToastItem(props: { toast: ToastItem; onClose: () => void }) {
   };
 
   // 自动关闭
-  const timer = setTimeout(handleClose, props.toast.duration || 3000);
+  const timer = setTimeout(handleClose, props.toast.duration || 5000);
   useDestroy(() => clearTimeout(timer));
+
+  function toTypeColor() {
+    const colors = {
+      success: "bg-green-50 text-green-500",
+      fail: "bg-red-50 text-red-500",
+      info: "bg-stone-50 text-stone-500",
+      warning: "bg-orange-50 text-orange-500",
+    };
+    const type = props.toast.type;
+    return colors[type];
+  }
 
   return (
     <div
       class={twMerge([
-        "inline-flex items-center rounded-lg bg-white px-4 py-2 shadow-md",
-        "justify-center border border-gray-100 text-stone-500",
-        "transform transition-all duration-300 ease-in-out", // 只负责出现
+        "inline-flex items-center rounded-md p-2 pl-6 shadow-md",
+        "justify-start gap-3 border border-gray-100",
+        "transform transition-all duration-500 ease-in-out", // 只负责出现
+        "min-w-96",
+        // "bg-white text-stone-800",
+        toTypeColor(),
         closing.get()
           ? "animate-fade-out -translate-y-2 opacity-0"
           : "animate-fade-in translate-y-0 opacity-100",
@@ -73,10 +87,10 @@ export function createToast() {
 }
 
 const Icons = {
-  success: () => <Svg.Success class="mr-2 size-5 text-green-500" />,
-  fail: () => <Svg.Fail class="mr-2 size-5 text-red-500" />,
-  info: () => <Svg.Info class="mr-2 size-5 text-gray-500" />,
-  warning: () => <Svg.Warning class="mr-2 size-5 text-orange-500" />,
+  success: () => <Svg.Success class="size-5 text-green-500" />,
+  fail: () => <Svg.Fail class="size-5 text-red-500" />,
+  info: () => <Svg.Info class="size-5 text-gray-500" />,
+  warning: () => <Svg.Warning class="size-5 text-orange-500" />,
 };
 
 createToast();

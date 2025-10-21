@@ -11,3 +11,7 @@ export * from "./json.tsx";
  * 生成随机ID
  */
 export const randomId = nanoid;
+/**
+ * 文件去重
+ */
+export * from "./md5";

@@ -7,9 +7,10 @@ import { Fail } from "./Fail";
 import { Warning } from "./Warning";
 import { EyeClosed } from "./EyeClosed";
 import { EyeOpened } from "./EyeOpened";
-
 import { Clear } from "./Clear";
 import { Calendar } from "./Calendar";
+import { Document } from "./Document";
+import { Delete } from "./Delete";
 
 export interface ISvgProps {
   children: Children;
@@ -46,3 +47,5 @@ Svg.EyeClosed = EyeClosed;
 Svg.EyeOpened = EyeOpened;
 // Svg.Calendar = Calendar;
 Svg.Clear = Clear;
+Svg.Document = Document;
+Svg.Delete = Delete;

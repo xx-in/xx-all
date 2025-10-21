@@ -94,7 +94,7 @@ export function ButtonList() {
         <Grid class="grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10">
           <For each={textStyles.get()}>
             {style => (
-              <Button class={twMerge(Button[style], "rounded-2xl bg-stone-50 shadow")}>
+              <Button class={twMerge(Button[style], "rounded-full bg-stone-50 shadow")}>
                 {style}
               </Button>
             )}

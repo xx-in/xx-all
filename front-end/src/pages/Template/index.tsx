@@ -4,7 +4,7 @@ import ValidateForm from "./ValidateForm";
 
 export default function Template() {
   return (
-    <div class="p-6">
+    <div class="py-4">
       <ButtonList></ButtonList>
       <FormList></FormList>
       <ValidateForm></ValidateForm>
