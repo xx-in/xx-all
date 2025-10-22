@@ -13,11 +13,13 @@ import { Document } from "./Document";
 import { Delete } from "./Delete";
 import { Download } from "./Download";
 import { FullScreen } from "./FullScreen";
+import { Close } from "./Close";
 
 export interface ISvgProps {
   children: Children;
   class?: ClassName;
   onClick?: () => void;
+  tip?: string;
 }
 
 export function Svg(props: IProps<ISvgProps>) {
@@ -25,14 +27,17 @@ export function Svg(props: IProps<ISvgProps>) {
     children,
     class: className,
     onClick,
+    tip,
   } = useProps(props, {
     class: "",
+    tip: "",
   });
 
   const baseClass = twMerge(["flex items-center size-4"]);
 
   return (
     <svg class={twMerge(baseClass, className.get())} onClick={onClick}>
+      <title>{tip.get()}</title>
       {children}
     </svg>
   );
@@ -51,3 +56,4 @@ Svg.Document = Document;
 Svg.Delete = Delete;
 Svg.Download = Download;
 Svg.FullScreen = FullScreen;
+Svg.Close = Close;

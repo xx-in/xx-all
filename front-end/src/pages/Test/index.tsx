@@ -20,10 +20,10 @@ export default function App() {
 
   return (
     <div class="p-2">
-      <Upload files={files} />
-      {/* <Upload files={files} limit={9} /> */}
-      {/* <Upload files={files} disabled /> */}
-      <Button onClick={handleSave}>保存</Button>
+      <Upload files={files} limitSize={Infinity} />
+      <div class="mt-2">
+        <Button onClick={handleSave}>保存</Button>
+      </div>
     </div>
   );
 }

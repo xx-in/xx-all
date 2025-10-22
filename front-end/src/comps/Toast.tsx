@@ -15,17 +15,99 @@ export type ToastItem = {
 
 const toasts = useSignal<ToastItem[]>([]);
 
-// 添加提示
+// ================== 分批添加逻辑 ==================
+interface ToastTask {
+  message: string;
+  type: ToastType;
+  duration?: number;
+}
+
+let addQueue: ToastTask[] = [];
+let addProcessing = false;
+let addLastTrigger = 0;
+
 export function addToast(message: string, type: ToastType = "info", duration = 3000) {
+  const now = Date.now();
+  addQueue.push({ message, type, duration });
+
+  if (now - addLastTrigger > 501) {
+    processAddQueue();
+  } else if (!addProcessing) {
+    setTimeout(() => processAddQueue(), 501 - (now - addLastTrigger));
+  }
+
+  addLastTrigger = now;
+}
+
+function processAddQueue() {
+  if (addProcessing || addQueue.length === 0) return;
+  addProcessing = true;
+
+  const next = () => {
+    const task = addQueue.shift();
+    if (!task) {
+      addProcessing = false;
+      return;
+    }
+    showToast(task);
+
+    if (addQueue.length > 0) {
+      setTimeout(next, 499);
+    } else {
+      addProcessing = false;
+    }
+  };
+
+  next();
+}
+
+function showToast({ message, type, duration }: ToastTask) {
   const id = randomId();
+  const newItem = { id, message, type, duration };
   toasts.update(cur => {
-    cur.push({ id, message, type, duration });
+    cur.push(newItem);
   });
 }
 
-// 移除提示
+// ================== 分批移除逻辑 ==================
+let removeQueue: string[] = [];
+let removeProcessing = false;
+let removeLastTrigger = 0;
+
 export function removeToast(id: string) {
-  toasts.set(cur => cur.filter(t => t.id !== id));
+  const now = Date.now();
+  removeQueue.push(id);
+
+  if (now - removeLastTrigger > 501) {
+    processRemoveQueue();
+  } else if (!removeProcessing) {
+    setTimeout(() => processRemoveQueue(), 501 - (now - removeLastTrigger));
+  }
+
+  removeLastTrigger = now;
+}
+
+function processRemoveQueue() {
+  if (removeProcessing || removeQueue.length === 0) return;
+  removeProcessing = true;
+
+  const next = () => {
+    const id = removeQueue.shift();
+    if (!id) {
+      removeProcessing = false;
+      return;
+    }
+
+    toasts.set(cur => cur.filter(t => t.id !== id));
+
+    if (removeQueue.length > 0) {
+      setTimeout(next, 499);
+    } else {
+      removeProcessing = false;
+    }
+  };
+
+  next();
 }
 
 export function Toast() {
@@ -43,10 +125,9 @@ export function ToastItem(props: { toast: ToastItem; onClose: () => void }) {
 
   const handleClose = () => {
     closing.set(true);
-    setTimeout(() => props.onClose(), 300); // 与动画时间匹配，需要比动画时间偏短，因为函数有延迟
+    setTimeout(() => props.onClose(), 300);
   };
 
-  // 自动关闭
   const timer = setTimeout(handleClose, props.toast.duration || 5000);
   useDestroy(() => clearTimeout(timer));
 
@@ -57,8 +138,7 @@ export function ToastItem(props: { toast: ToastItem; onClose: () => void }) {
       info: "bg-stone-50 text-stone-500",
       warning: "bg-orange-50 text-orange-500",
     };
-    const type = props.toast.type;
-    return colors[type];
+    return colors[props.toast.type];
   }
 
   return (
@@ -66,9 +146,8 @@ export function ToastItem(props: { toast: ToastItem; onClose: () => void }) {
       class={twMerge([
         "inline-flex items-center rounded-md p-2 pl-6 shadow-md",
         "justify-start gap-3 border border-gray-100",
-        "transform transition-all duration-500 ease-in-out", // 只负责出现
+        "transform transition-all duration-500 ease-in-out",
         "min-w-96",
-        // "bg-white text-stone-800",
         toTypeColor(),
         closing.get()
           ? "animate-fade-out -translate-y-2 opacity-0"

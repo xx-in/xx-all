@@ -15,3 +15,18 @@
 - `children` 在`ts`中的类型是普通变量，但实际上是一个`readSignal`函数。
 
 - `children`只能被渲染一次，第二次渲染是移动，原因未知，如果需要多次渲染，考虑多包裹一次函数实现。
+
+## null vs undefined
+
+之前一直以为`null`和`undefined`的功能重复了，直到我使用`typescript`来完成一些功能的时候。`null`和`undefined`都表示空，其中未赋值的变量默认为`undefined`。根据这点行为上的不同，我们可以在思维模型上区分这种类型：
+
+- `undefined`表示未赋值，在变量处理上，我们可以给这种变量赋默认值
+- `null`表示已经赋值，在变量处理上，此时我们就不能给变量赋默认值
+
+或者做如下类比：
+
+```js
+let v1 = 0; // number
+let v2 = ""; // string
+let v3 = null; // object
+```

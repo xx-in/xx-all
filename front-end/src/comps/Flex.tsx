@@ -29,3 +29,5 @@ export function Flex(props: IProps<IFlexProps>) {
     </div>
   );
 }
+
+function Fixed() {}

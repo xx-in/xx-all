@@ -27,6 +27,7 @@ export interface ISignal<T> {
 }
 
 export function useSignal<T>(val: () => T): ISignal<T>;
+export function useSignal<T>(val: null): ISignal<T | null>;
 export function useSignal<T>(val: T | ISignal<T>): ISignal<T>;
 export function useSignal<T>(val: T | ISignal<T>) {
   // 1. 信号类型
@@ -63,26 +64,28 @@ export function useSignal<T>(val: T | ISignal<T>) {
   };
 }
 
-export type ISignalProp<T> = T | ISignal<NonNullable<T>>;
+export type ISignalProp<T> = T | ISignal<NonUndefined<T>>;
 
 /**
  * 数据类型
  */
 type IDatas<T> = {
   // 普通属性：非 on 开头，非 children
-  [K in keyof Required<T> as K extends `on${string}` | `${string}Children` | "children"
+  [K in keyof Required<T> as K extends `on${string}` | `${string}hildren` | `${string}Comp`
     ? never
     : K]: ISignal<NonUndefined<T[K]>>;
 } & {
   // on 开头属性或 children：保持原样
-  [K in keyof T as K extends `on${string}` | `${string}Children` | "children" ? K : never]: T[K];
+  [K in keyof T as K extends `on${string}` | `${string}hildren` | `${string}Comp`
+    ? K
+    : never]: T[K];
 };
 
 /**
  * 参数类型
  */
 export type IProps<T> = {
-  [K in keyof T]: T[K] | ISignal<NonNullable<T[K]>>;
+  [K in keyof T]: T[K] | ISignal<NonUndefined<T[K]>>;
 };
 
 /**
@@ -106,7 +109,7 @@ export function useProps<T extends Record<string, any>>(
      *
      * 否则处理为信号类型
      */
-    if (prop.match(/children/i) || prop.startsWith("on")) {
+    if (prop.match(/hildren$/i) || prop.match(/Comp$/i) || prop.startsWith("on")) {
       // @ts-ignore
       result[prop] = value;
     } else {
@@ -133,7 +136,8 @@ type RequiredFromOptional<T> = {
 /**
  * 将可选类型转变为必填
  */
-type NonUndefined<T> = Exclude<T, undefined>;
+type NonUndefined<T> = T extends undefined ? never : T;
+// type NonUndefined<T> = Exclude<T, undefined>;
 
 export type Children = JSX.Element | Element;
 
