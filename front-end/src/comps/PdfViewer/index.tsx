@@ -8,6 +8,10 @@ interface IPdfViewerProps {
 
 let currentLoadId = 0;
 
+const CMAP_URL = "node_modules/pdfjs-dist/cmaps/";
+const CMAP_PACKED = true;
+const ENABLE_XFA = true;
+
 export function PdfViewer(props: IProps<IPdfViewerProps>) {
   let containerRef: HTMLDivElement;
   const { url, preload } = useProps(props, { preload: 2 });
@@ -41,20 +45,24 @@ export function PdfViewer(props: IProps<IPdfViewerProps>) {
     const page = await doc.getPage(pageNum);
     const containerWidth = containerRef!.clientWidth;
     const viewport = page.getViewport({ scale: 1 });
-    const scale = containerWidth / viewport.width;
+
+    const dpr = window.devicePixelRatio || 1;
+    const scale = (containerWidth / viewport.width) * dpr;
     const scaledViewport = page.getViewport({ scale });
 
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d")!;
     canvas.width = scaledViewport.width;
     canvas.height = scaledViewport.height;
+
+    // CSS 尺寸保持容器宽度，避免浏览器缩放
+    canvas.style.width = `${containerWidth}px`;
+    canvas.style.height = `${scaledViewport.height / dpr}px`;
     canvas.style.display = "block";
     canvas.style.marginBottom = "10px";
 
-    // 新增：设置 data-page 属性
     canvas.dataset.page = pageNum.toString();
 
-    // 渲染 PDF 页面
     await page.render({ canvasContext: ctx, viewport: scaledViewport }).promise;
 
     if (loadId !== currentLoadId) return;
@@ -102,7 +110,12 @@ export function PdfViewer(props: IProps<IPdfViewerProps>) {
     isRendering.set(false);
 
     try {
-      const doc = await pdfjsLib.getDocument(url).promise;
+      const doc = await pdfjsLib.getDocument({
+        url,
+        cMapUrl: CMAP_URL,
+        cMapPacked: CMAP_PACKED,
+        enableXfa: ENABLE_XFA,
+      }).promise;
       if (loadId !== currentLoadId) return;
       pdfDoc.set(doc);
 
