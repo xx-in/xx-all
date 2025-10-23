@@ -10,6 +10,7 @@ import { SvgDownload } from "@comps/Svg/Download";
 import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
 import { PdfViewer } from "@comps/PdfViewer";
+import { EpubViewer } from "@comps/EpubViewer";
 
 interface IPreviewDialogProps {
   visible: boolean;
@@ -74,6 +75,10 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
     return type.includes("pdf");
   }
 
+  function isEpub(type: string) {
+    return type.includes("epub");
+  }
+
   /**
    * 在新标签页打开
    */
@@ -118,6 +123,9 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
           <Match when={isPdf(fileType.get())}>
             {/* <PdfViewer file={fileUrl} /> */}
             <PdfViewer url={fileUrl} />
+          </Match>
+          <Match when={isEpub(fileType.get())}>
+            <EpubViewer url={fileUrl} />
           </Match>
           {/* 图片 */}
           <Match when={isImage(fileType.get())}>

@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <div class="p-2">
-      <Upload files={files} limitSize={Infinity} accept={"application/pdf"} />
+      <Upload files={files} limitSize={Infinity} />
       <div class="mt-2">
         <Button onClick={handleSave}>保存</Button>
       </div>
