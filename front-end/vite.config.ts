@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [solid(), tailwindcss()],
   resolve: {
     alias: {
+      '@comps': resolve(__dirname, 'src/comps'),
       '@': resolve(__dirname, 'src'),
     }
   },

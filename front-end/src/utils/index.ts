@@ -15,3 +15,14 @@ export const randomId = nanoid;
  * 文件去重
  */
 export * from "./md5";
+
+export function throttle<T extends (...args: any[]) => void>(fn: T, delay = 300): T {
+  let timer: number | null = null;
+  return ((...args: any[]) => {
+    if (timer) return;
+    timer = window.setTimeout(() => {
+      fn(...args);
+      timer = null;
+    }, delay);
+  }) as T;
+}

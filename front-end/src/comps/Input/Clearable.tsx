@@ -1,8 +1,8 @@
 import { useProps, type IProps } from "@/utils";
 import { Show } from "solid-js";
 import { twMerge } from "tailwind-merge";
-import { Svg } from "@/comps/Svg";
 import { Input, type IInputProps } from ".";
+import { SvgClear } from "@comps/Svg/Clear";
 
 interface IClearableProps extends IInputProps {}
 
@@ -49,7 +49,7 @@ export function Clearable(props: IProps<IClearableProps>) {
       <Input {...restProps} baseClass={inputClass} value={value} />
       <div class="flex items-center p-2" onClick={handleClear}>
         <Show when={value.get()}>
-          <Svg.Clear class="size-4 cursor-pointer hover:text-red-500" />
+          <SvgClear class="size-4 cursor-pointer hover:text-red-500" />
         </Show>
       </div>
     </div>

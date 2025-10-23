@@ -1,5 +1,5 @@
-import { Button } from "@/comps/Button";
-import { Upload } from "@/comps/Upload";
+import { Button } from "@comps/Button";
+import { Upload } from "@comps/Upload";
 import { useSignal, stringifyJSON, parseJSON, parseResponse } from "@/utils";
 import type { JSX } from "solid-js";
 
@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <div class="p-2">
-      <Upload files={files} limitSize={Infinity} />
+      <Upload files={files} limitSize={Infinity} accept={"application/pdf"} />
       <div class="mt-2">
         <Button onClick={handleSave}>保存</Button>
       </div>

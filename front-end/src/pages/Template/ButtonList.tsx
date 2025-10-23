@@ -1,7 +1,7 @@
-import { Button } from "@/comps/Button";
-import { Card } from "@/comps/Card";
-import { Grid } from "@/comps/Grid";
-import { addToast } from "@/comps/Toast";
+import { Button } from "@comps/Button";
+import { Card } from "@comps/Card";
+import { Grid } from "@comps/Grid";
+import { addToast } from "@comps/Toast";
 import { copy, useSignal } from "@/utils";
 import { For } from "solid-js";
 import { twMerge } from "tailwind-merge";

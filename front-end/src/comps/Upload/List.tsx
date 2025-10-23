@@ -1,17 +1,20 @@
 import { useEffect, useProps, useSignal, type IProps } from "@/utils";
 import { Show, For } from "solid-js";
-import { Flex } from "@/comps/Flex";
-import { Grid } from "@/comps/Grid";
-import { Svg } from "@/comps/Svg";
+import { Flex } from "@comps/Flex";
+import { Grid } from "@comps/Grid";
+import { Svg } from "@comps/Svg";
 import { formatBytes } from "./tools";
 import { PreviewDialog } from "./PreviewDialog";
+import { SvgDocument } from "@comps/Svg/Document";
+import { SvgSuccess } from "@comps/Svg/Success";
+import { SvgFail } from "@comps/Svg/Fail";
 
 /**
  * 文件列表
  * @param props
  * @returns
  */
-export function FileList(
+export function List(
   props: IProps<{
     files: Array<File>;
     disabled: boolean;
@@ -57,7 +60,7 @@ export function FileList(
                 <Flex class="group cursor-pointer rounded-sm px-2 py-1 select-none hover:bg-blue-50">
                   {/* 文件名 */}
                   <Flex class="flex-1 gap-2 overflow-hidden" title={file.name}>
-                    <Svg.Document class="text-gray-500" />
+                    <SvgDocument class="text-gray-500" />
 
                     <span
                       class="flex-1 truncate group-hover:text-blue-500 hover:underline hover:underline-offset-4"
@@ -70,8 +73,8 @@ export function FileList(
                   <Flex class="w-24 justify-end gap-2">
                     <span>{formatBytes(file.size)}</span>
                     <Show when={!disabled.get()}>
-                      <Svg.Success class="text-green-400 group-hover:hidden" />
-                      <Svg.Fail
+                      <SvgSuccess class="text-green-400 group-hover:hidden" />
+                      <SvgFail
                         class="hidden cursor-pointer text-red-400 group-hover:flex hover:text-red-500"
                         onClick={() => handleRemove(index())}
                       />
@@ -84,7 +87,7 @@ export function FileList(
         </Grid>
       </Show>
       {/* 预览弹窗 */}
-      <PreviewDialog visible={previewVisible} file={previewFile}></PreviewDialog>
+      <PreviewDialog visible={previewVisible} file={previewFile} files={files}></PreviewDialog>
     </>
   );
 }

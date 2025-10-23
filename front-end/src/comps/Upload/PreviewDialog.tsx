@@ -1,12 +1,20 @@
 import { type IProps, useProps, useSignal, fileToUrl } from "@/utils";
 import { Switch, Match } from "solid-js";
-import { Dialog } from "@/comps/Dialog";
-import { Flex } from "@/comps/Flex";
-import { Svg } from "@/comps/Svg";
+import { Dialog } from "@comps/Dialog";
+import { Flex } from "@comps/Flex";
+import { Svg } from "@comps/Svg";
+import { Button } from "@comps/Button";
+import { twMerge } from "tailwind-merge";
+import { SvgFullScreen } from "@comps/Svg/FullScreen";
+import { SvgDownload } from "@comps/Svg/Download";
+import { SvgLeftBold } from "@comps/Svg/LeftBold";
+import { SvgRightBold } from "@comps/Svg/RightBold";
+import { PdfViewer } from "@comps/PdfViewer";
 
 interface IPreviewDialogProps {
   visible: boolean;
   file: File | null;
+  files?: File[];
 }
 /**
  * 文件预览列表
@@ -14,7 +22,9 @@ interface IPreviewDialogProps {
  * @returns
  */
 export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
-  const { visible, file } = useProps(props, {});
+  const { visible, file, files } = useProps(props, {
+    files: [],
+  });
 
   const fileType = useSignal(() => {
     if (file.get()) {
@@ -82,18 +92,40 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
     a.remove();
   }
 
+  function handleNext() {
+    let index = files.get().findIndex(curFile => curFile == file.get());
+    index += 1;
+    if (index == files.get().length) {
+      index = 0;
+    }
+    file.set(files.get()[index]);
+  }
+
+  function handlePre() {
+    let index = files.get().findIndex(curFile => curFile == file.get());
+    index -= 1;
+    if (index < 0) {
+      index = files.get().length - 1;
+    }
+    file.set(files.get()[index]);
+  }
+
   return (
     <Dialog visible={visible} title={fileName}>
-      <div class="relative size-full bg-transparent">
+      <div class="relative size-full">
         <Switch>
+          {/* pdf */}
           <Match when={isPdf(fileType.get())}>
-            <iframe src={fileUrl.get()} width="100%" height="100%"></iframe>
+            {/* <PdfViewer file={fileUrl} /> */}
+            <PdfViewer url={fileUrl} />
           </Match>
+          {/* 图片 */}
           <Match when={isImage(fileType.get())}>
             <img src={fileUrl.get()} class="mx-auto size-full object-contain" />
           </Match>
+          {/* 其他 */}
           <Match when={true}>
-            <Flex class="w-full flex-col justify-center gap-4 py-10">
+            <Flex class="h-full w-full flex-col justify-center gap-4 py-10">
               <div>暂未支持预览的文件</div>
               <a
                 href={fileUrl.get()}
@@ -105,14 +137,34 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
             </Flex>
           </Match>
         </Switch>
+
+        {/* 左右翻页 */}
+        <Button
+          class={
+            "fixed top-1/2 left-10 size-8 -translate-y-1/2 rounded-full bg-stone-600/70 p-2 text-white hover:bg-stone-500/70 sm:left-2 lg:left-10 lg:size-14"
+          }
+          onClick={handlePre}
+        >
+          <SvgLeftBold class="lg:size-6" />
+        </Button>
+
+        <Button
+          class={
+            "fixed top-1/2 right-10 size-8 -translate-y-1/2 rounded-full bg-stone-600/70 p-2 text-white hover:bg-stone-500/70 sm:right-2 lg:right-10 lg:size-14"
+          }
+          onClick={handleNext}
+        >
+          <SvgRightBold class="lg:size-6" />
+        </Button>
+
         {/* 操作按钮组 */}
         <Flex class="absolute right-3 bottom-5 flex-col gap-2 p-2 text-stone-300">
-          <Svg.FullScreen
+          <SvgFullScreen
             tip="全屏"
             class="size-8 cursor-pointer bg-stone-700 p-2 hover:text-white"
             onClick={handleJump}
           />
-          <Svg.Download
+          <SvgDownload
             tip="下载"
             class="size-8 cursor-pointer bg-stone-700 p-2 hover:text-white"
             onClick={handleDown}

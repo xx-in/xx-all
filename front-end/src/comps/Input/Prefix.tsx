@@ -1,6 +1,6 @@
 import { useProps, type Children, type ClassName, type IProps } from "@/utils";
 import { twMerge } from "tailwind-merge";
-import { Flex } from "@/comps/Flex";
+import { Flex } from "@comps/Flex";
 interface IPrefixProps {
   children: Children;
   class?: ClassName;

@@ -2,6 +2,10 @@ import { appendComponentToBody, randomId, useDestroy, useSignal } from "@/utils"
 import { For } from "solid-js";
 import { Svg } from "./Svg";
 import { twMerge } from "tailwind-merge";
+import { SvgSuccess } from "./Svg/Success";
+import { SvgFail } from "./Svg/Fail";
+import { SvgInfo } from "./Svg/Info";
+import { SvgWarning } from "./Svg/Warning";
 
 export type ToastType = "success" | "fail" | "info" | "warning";
 
@@ -166,10 +170,10 @@ export function createToast() {
 }
 
 const Icons = {
-  success: () => <Svg.Success class="size-5 text-green-500" />,
-  fail: () => <Svg.Fail class="size-5 text-red-500" />,
-  info: () => <Svg.Info class="size-5 text-gray-500" />,
-  warning: () => <Svg.Warning class="size-5 text-orange-500" />,
+  success: () => <SvgSuccess class="size-5 text-green-500" />,
+  fail: () => <SvgFail class="size-5 text-red-500" />,
+  info: () => <SvgInfo class="size-5 text-gray-500" />,
+  warning: () => <SvgWarning class="size-5 text-orange-500" />,
 };
 
 createToast();

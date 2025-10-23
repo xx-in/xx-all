@@ -1,11 +1,10 @@
-import { Button } from "@/comps/Button";
-import { Card } from "@/comps/Card";
-import { Flex } from "@/comps/Flex";
-import { Form } from "@/comps/Form";
-import { Input } from "@/comps/Input";
-import { Svg } from "@/comps/Svg";
-import { addToast } from "@/comps/Toast";
+import { Card } from "@comps/Card";
+import { Form } from "@comps/Form";
+import { Input } from "@comps/Input";
+import { addToast } from "@comps/Toast";
 import { useSignal } from "@/utils";
+import { SvgSearch } from "@comps/Svg/Search";
+import { SvgCalendar } from "@comps/Svg/Calendar";
 
 export default function FormList() {
   const text = useSignal("");
@@ -64,7 +63,7 @@ export default function FormList() {
                   class="cursor-pointer border-none pl-4 hover:bg-blue-100 hover:text-blue-500"
                   onClick={handleSearch}
                 >
-                  <Svg.Search class="size-4" />
+                  <SvgSearch class="size-4" />
                 </Input.Prefix>
               }
             ></Input.Group>
@@ -78,7 +77,7 @@ export default function FormList() {
                   class="cursor-pointer px-4 hover:bg-blue-100 hover:text-blue-500"
                   onClick={handleSearch}
                 >
-                  <Svg.Search class="size-4" />
+                  <SvgSearch class="size-4" />
                 </Input.Suffix>
               }
             ></Input.Group>
@@ -89,7 +88,7 @@ export default function FormList() {
               class="rounded-full pl-4"
               suffixChildren={
                 <Input.Suffix class="cursor-pointer border-none px-4 hover:bg-blue-100 hover:text-blue-500">
-                  <Svg.Calendar class="size-4" />
+                  <SvgCalendar class="size-4" />
                 </Input.Suffix>
               }
             ></Input.Group>
@@ -181,7 +180,7 @@ export default function FormList() {
                   class="cursor-pointer px-4 hover:bg-blue-100 hover:text-blue-500"
                   onClick={handleSearch}
                 >
-                  <Svg.Search class="size-4" />
+                  <SvgSearch class="size-4" />
                 </Input.Suffix>
               }
             ></Input.Group>
@@ -248,7 +247,7 @@ export default function FormList() {
                   class="cursor-pointer px-4 hover:bg-blue-100 hover:text-blue-500"
                   onClick={handleSearch}
                 >
-                  <Svg.Search class="size-4" />
+                  <SvgSearch class="size-4" />
                 </Input.Suffix>
               }
             ></Input.Group>

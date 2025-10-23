@@ -1,13 +1,13 @@
 import type { IProps } from "@/utils";
 import { Svg, type ISvgProps } from ".";
 
-export function SvgDocument(props: IProps<Omit<ISvgProps, "children">>) {
+export function SvgLeftBold(props: IProps<Omit<ISvgProps, "children">>) {
   return (
     <Svg {...props}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
         <path
           fill="currentColor"
-          d="M832 384H576V128H192v768h640zm-26.496-64L640 154.496V320zM160 64h480l256 256v608a32 32 0 0 1-32 32H160a32 32 0 0 1-32-32V96a32 32 0 0 1 32-32m160 448h384v64H320zm0-192h160v64H320zm0 384h384v64H320z"
+          d="M685.248 104.704a64 64 0 0 1 0 90.496L368.448 512l316.8 316.8a64 64 0 0 1-90.496 90.496L232.704 557.248a64 64 0 0 1 0-90.496l362.048-362.048a64 64 0 0 1 90.496 0"
           stroke-width="25.5"
           stroke="currentColor"
         />

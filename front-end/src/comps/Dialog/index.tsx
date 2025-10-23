@@ -1,7 +1,7 @@
 import { useEffect, useMount, useProps, type Children, type ClassName, type IProps } from "@/utils";
 import { Portal, Show } from "solid-js/web";
 import { twMerge } from "tailwind-merge";
-import { Flex } from "@/comps/Flex";
+import { Flex } from "@comps/Flex";
 import { Title } from "./Title";
 
 interface IDialogProps {
@@ -25,7 +25,7 @@ export function Dialog(props: IProps<IDialogProps>) {
   });
 
   const baseClass = twMerge([
-    "w-1/2 overflow-hidden mt-10 max-h-8/9 flex justify-center rounded-lg flex-col p-0 bg-white dark:bg-black",
+    "w-9/10 lg:w-3/4 overflow-hidden mt-10 max-h-8/9 flex justify-center rounded-lg flex-col p-0 bg-stone-50 dark:bg-black shadow-lg border border-black/60",
   ]);
   function handleClick(e: MouseEvent) {
     e.stopPropagation();

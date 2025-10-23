@@ -1,6 +1,6 @@
 import { useProps, type IProps } from "@/utils";
 import { twMerge } from "tailwind-merge";
-import { Flex } from "@/comps/Flex";
+import { Flex } from "@comps/Flex";
 import { Show } from "solid-js";
 import { type IFormItemProps } from "./Item";
 

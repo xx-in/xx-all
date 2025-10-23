@@ -1,9 +1,9 @@
-import { Button } from "@/comps/Button";
-import { Card } from "@/comps/Card";
-import { Flex } from "@/comps/Flex";
-import { Form, useFormItem } from "@/comps/Form";
-import { Input } from "@/comps/Input";
-import { addToast } from "@/comps/Toast";
+import { Button } from "@comps/Button";
+import { Card } from "@comps/Card";
+import { Flex } from "@comps/Flex";
+import { Form, useFormItem } from "@comps/Form";
+import { Input } from "@comps/Input";
+import { addToast } from "@comps/Toast";
 import { validate } from "@/utils";
 
 export default function ValidateForm() {

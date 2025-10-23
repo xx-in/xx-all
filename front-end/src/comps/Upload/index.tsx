@@ -4,7 +4,7 @@ import { Button } from "../Button";
 import { type JSX } from "solid-js";
 import { addToast } from "../Toast";
 import { getAllFilesSize } from "./tools";
-import { FileList } from "./FileList";
+import { List } from "./List";
 /**
  * 文件上传类型
  */
@@ -16,7 +16,8 @@ interface IUploadProps {
   disabled?: boolean;
   limit?: number; // 限制文件数量
   limitSize?: number; // 限制文件总大小 (MB)
-  ListComp?: typeof FileList; // 文件列表组件
+  ListComp?: typeof List; // 文件列表组件
+  accept?: string;
 }
 /**
  * 文件上传
@@ -33,13 +34,15 @@ export function Upload(props: IProps<IUploadProps>) {
     limit,
     limitSize,
     ListComp,
+    accept,
   } = useProps(props, {
     class: "",
     children: "",
     disabled: false,
     limit: Infinity,
     limitSize: 380,
-    ListComp: FileList,
+    ListComp: List,
+    accept: "*",
   });
 
   const baseClass = twMerge([""]);
@@ -108,6 +111,7 @@ export function Upload(props: IProps<IUploadProps>) {
         ref={e => (refFile = e)}
         onChange={handleChange}
         multiple={multiple.get()}
+        accept={accept.get()}
       />
       <button onClick={handleClick} disabled={disabled.get()}>
         {children || (

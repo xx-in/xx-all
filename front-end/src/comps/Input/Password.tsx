@@ -1,8 +1,9 @@
 import { useProps, useSignal, type IProps } from "@/utils";
 import { Show } from "solid-js";
 import { twMerge } from "tailwind-merge";
-import { Svg } from "@/comps/Svg";
 import { Input, type IInputProps } from ".";
+import { SvgEyeOpened } from "@comps/Svg/EyeOpened";
+import { SvgEyeClosed } from "@comps/Svg/EyeClosed";
 
 interface IPasswordProps extends Omit<IInputProps, "type"> {}
 
@@ -53,10 +54,10 @@ export function Password(props: IProps<IPasswordProps>) {
       <Input {...restProps} baseClass={inputClass} type={type} />
       <div class="flex items-center p-2" onClick={toggle}>
         <Show when={type.get() != "password"}>
-          <Svg.EyeOpened class="size-4 cursor-pointer" />
+          <SvgEyeOpened class="size-4 cursor-pointer" />
         </Show>
         <Show when={type.get() == "password"}>
-          <Svg.EyeClosed class="size-4 cursor-pointer" />
+          <SvgEyeClosed class="size-4 cursor-pointer" />
         </Show>
       </div>
     </div>

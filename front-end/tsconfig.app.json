@@ -28,7 +28,8 @@
     /* 设置别名 */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@comps/*": ["src/comps/*"],
+      "@/*": ["src/*"],
     }
   },
   "include": ["src"]

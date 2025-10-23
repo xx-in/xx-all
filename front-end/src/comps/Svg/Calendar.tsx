@@ -1,7 +1,7 @@
 import type { IProps } from "@/utils";
 import { Svg, type ISvgProps } from ".";
 
-export function Calendar(props: IProps<Omit<ISvgProps, "children">>) {
+export function SvgCalendar(props: IProps<Omit<ISvgProps, "children">>) {
   return (
     <Svg {...props}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">

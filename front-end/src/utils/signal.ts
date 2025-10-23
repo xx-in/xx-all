@@ -43,10 +43,9 @@ export function useSignal<T>(val: T | ISignal<T>) {
 
   // 2. 函数类型是用于生成计算属性
   if (typeof val == "function") {
-    const [get, set] = createSignal(val());
-    useEffect(() => {
-      set(val());
-    });
+    const cb = val;
+    const [get, set] = createSignal(cb());
+    useEffect(() => set(cb()));
     return {
       update,
       get,
