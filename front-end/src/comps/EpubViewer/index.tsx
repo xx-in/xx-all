@@ -28,6 +28,7 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
         width: "100%",
         height: "100%",
         flow: flow.get(), // 滚动阅读
+        spread: "none",
       });
 
       rendition.display();
@@ -35,10 +36,14 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
       // 设置主题样式
       rendition.themes.default({
         body: {
-          "font-size": "1.1em",
           background: "transparent",
         },
+        a: {
+          "font-size": "1.1em",
+          "line-height": "2.2",
+        },
         p: {
+          "font-size": "1.1em",
           "line-height": "2.2",
         },
       });
