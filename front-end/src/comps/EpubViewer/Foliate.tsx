@@ -1,8 +1,6 @@
-import { createEffect, createSignal, onCleanup } from "solid-js";
 // @ts-ignore
 import { View } from "foliate-js/view.js";
 import { useEffect, useProps, useSignal, type IProps } from "@/utils";
-import { Button } from "@comps/Button";
 import { twMerge } from "tailwind-merge";
 import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";

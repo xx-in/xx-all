@@ -2,16 +2,14 @@ import { type IProps, useProps, useSignal, fileToUrl } from "@/utils";
 import { Switch, Match } from "solid-js";
 import { Dialog } from "@comps/Dialog";
 import { Flex } from "@comps/Flex";
-import { Svg } from "@comps/Svg";
 import { Button } from "@comps/Button";
-import { twMerge } from "tailwind-merge";
 import { SvgFullScreen } from "@comps/Svg/FullScreen";
 import { SvgDownload } from "@comps/Svg/Download";
 import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
 import { PdfViewer } from "@comps/PdfViewer";
 import { EpubViewer } from "@comps/EpubViewer";
-import { EpubViewerFoliate } from "@comps/EpubViewer/Foliate";
+// import { EpubViewerFoliate } from "@comps/EpubViewer/Foliate";
 
 interface IPreviewDialogProps {
   visible: boolean;
@@ -168,7 +166,7 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
         </Button>
 
         {/* 操作按钮组 */}
-        <Flex class="absolute right-3 bottom-5 flex-col gap-2 p-2 text-stone-300">
+        <Flex class="absolute right-3 bottom-15 flex-col gap-2 p-2 text-stone-300">
           <SvgFullScreen
             tip="全屏"
             class="size-8 cursor-pointer bg-stone-700 p-2 hover:text-white"

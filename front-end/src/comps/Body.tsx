@@ -1,4 +1,4 @@
-import { useDestroy, useEffect, useMount, useProps, type IProps } from "@/utils";
+import { useDestroy, useMount } from "@/utils";
 
 type IBodyProps = {
   onkeydown?: (e: any) => void;
