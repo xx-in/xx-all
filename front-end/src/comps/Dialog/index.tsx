@@ -25,7 +25,7 @@ export function Dialog(props: IProps<IDialogProps>) {
   });
 
   const baseClass = twMerge([
-    "w-9/10 lg:w-3/4 overflow-hidden mt-10 max-h-8/9 flex justify-center rounded-lg flex-col p-0 bg-stone-50 dark:bg-black shadow-lg border border-black/60",
+    "w-9/10 lg:w-3/4 overflow-hidden mt-10 max-h-8/9 flex justify-center rounded-lg flex-col p-0 bg-stone-500  shadow-lg border border-black/60",
   ]);
   function handleClick(e: MouseEvent) {
     e.stopPropagation();

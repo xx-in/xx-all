@@ -11,6 +11,7 @@ import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
 import { PdfViewer } from "@comps/PdfViewer";
 import { EpubViewer } from "@comps/EpubViewer";
+import { EpubViewerFoliate } from "@comps/EpubViewer/Foliate";
 
 interface IPreviewDialogProps {
   visible: boolean;
@@ -117,7 +118,7 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
 
   return (
     <Dialog visible={visible} title={fileName}>
-      <div class="relative size-full">
+      <div class="relative size-full bg-stone-50">
         <Switch>
           {/* pdf */}
           <Match when={isPdf(fileType.get())}>
@@ -125,7 +126,8 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
             <PdfViewer url={fileUrl} />
           </Match>
           <Match when={isEpub(fileType.get())}>
-            <EpubViewer url={fileUrl} />
+            <EpubViewer file={file} />
+            {/* <EpubViewerFoliate url={fileUrl} /> */}
           </Match>
           {/* 图片 */}
           <Match when={isImage(fileType.get())}>

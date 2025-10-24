@@ -1,53 +1,42 @@
-import { useEffect, useMount, useProps, useSignal, type IProps } from "@/utils";
+import { createEffect, createSignal, onCleanup } from "solid-js";
+// @ts-ignore
+import { View } from "foliate-js/view.js";
+import { useEffect, useProps, useSignal, type IProps } from "@/utils";
+import { Button } from "@comps/Button";
+import { twMerge } from "tailwind-merge";
 import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
-import ePub, { Book } from "epubjs";
-import { twMerge } from "tailwind-merge";
+
 interface IEpubViewer {
-  file: File | null;
+  url: string;
 }
-export function EpubViewer(props: IProps<IEpubViewer>) {
-  const { file } = useProps(props, {});
+export function EpubViewerFoliate(props: IProps<IEpubViewer>) {
+  const { url } = useProps(props, {});
   let refContainer: HTMLDivElement;
 
-  useEffect(() => {
-    if (file.get()) {
-      refContainer.innerHTML = "";
-      var book = ePub(file.get() as any);
-      let rendition = book.renderTo(refContainer, {
-        width: "100%",
-        height: "100%",
-        flow: "scrolled", // 滚动 仅能加载一章
-        spread: "none",
-      });
-
-      rendition.display();
-      curBook.set(rendition);
-      setStyle();
-    }
-  });
-
-  const curBook = useSignal<any>(null);
-
-  function setStyle() {
-    curBook.get().themes.default({
-      body: {
-        "font-size": "1.1em",
-        background: "transparent",
-      },
-      p: {
-        "line-height": "2.2",
-      },
-    });
-  }
+  const book = useSignal<any>(null);
 
   function handleNext() {
-    curBook.get().next();
+    book.get().next();
   }
 
   function handlePrev() {
-    curBook.get().prev();
+    book.get().prev();
   }
+
+  useEffect(async () => {
+    refContainer.innerHTML = "";
+    const view = new View();
+    console.log("??view", view);
+    book.set(view);
+    view.style.height = "100%";
+    view.style.width = "100%";
+    if (refContainer) {
+      refContainer.appendChild(view);
+    }
+    await view.open(url.get());
+    view.renderer.next();
+  });
 
   return (
     <div class="relative size-full py-5">
