@@ -1,4 +1,4 @@
-import { useEffect, useProps, useSignal, type IProps } from "@/utils";
+import { throttle, useEffect, useProps, useSignal, type IProps } from "@/utils";
 import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
 import ePub from "epubjs";
@@ -7,12 +7,18 @@ import { twMerge } from "tailwind-merge";
 interface IEpubViewer {
   file: File | null;
   flow?: "scrolled" | "paginated";
+  spread?: "auto" | "none";
+  class?: string;
 }
 
 export function EpubViewer(props: IProps<IEpubViewer>) {
-  const { file, flow } = useProps(props, {
-    flow: "scrolled",
-  });
+  const {
+    file,
+    class: className,
+    flow,
+    spread,
+  } = useProps(props, { class: "", flow: "scrolled", spread: "auto" });
+
   let refContainer: HTMLDivElement;
 
   const curBook = useSignal<any>(null);
@@ -22,33 +28,34 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
   useEffect(() => {
     if (file.get()) {
       refContainer.innerHTML = "";
-
       const book = ePub(file.get() as any) as any;
       const rendition = book.renderTo(refContainer, {
         width: "100%",
         height: "100%",
-        flow: flow.get(), // 滚动阅读
-        spread: "none",
+        flow: flow.get(),
+        spread: spread.get(),
       });
 
       rendition.display();
 
-      // 设置主题样式
-      rendition.themes.default({
+      curBook.set(rendition);
+
+      setStyles({
         body: {
           background: "transparent",
         },
+        image: {
+          width: "100%",
+        },
         a: {
-          "font-size": "1.1em",
           "line-height": "2.2",
+          "font-size": "1em",
         },
         p: {
-          "font-size": "1.1em",
+          "font-size": "1.2em",
           "line-height": "2.2",
         },
       });
-
-      curBook.set(rendition);
 
       // 获取章节信息（spine）
       book.ready.then(() => {
@@ -67,6 +74,15 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
     }
   });
 
+  /**
+   * 设置样式
+   * @param style
+   */
+  function setStyles(style: object) {
+    curBook.get().themes.default(style);
+    console.log(curBook.get());
+  }
+
   function handleNext() {
     curBook.get()?.next();
   }
@@ -76,24 +92,25 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
   }
 
   return (
-    <div class="relative size-full py-5">
+    <div class={twMerge("relative flex size-full", className.get())}>
       {/* epub内容容器 */}
-      <div ref={e => (refContainer = e)} class="mx-auto h-full"></div>
 
       {/* 左翻页按钮 */}
       <div
         class={twMerge(
-          "group absolute top-0 left-0 flex h-full w-20 cursor-pointer items-center justify-center bg-transparent",
+          "group absolute left-0 flex h-full w-20 flex-none cursor-pointer items-center justify-center",
         )}
         onClick={handlePrev}
       >
         <SvgLeftBold class="size-6 scale-y-125 text-stone-200 group-hover:text-black" />
       </div>
 
+      <div ref={e => (refContainer = e)} class="h-full flex-1 py-2"></div>
+
       {/* 右翻页按钮 */}
       <div
         class={twMerge(
-          "group absolute top-0 right-0 flex h-full w-20 cursor-pointer items-center justify-center bg-transparent",
+          "group absolute right-0 flex h-full w-20 flex-none cursor-pointer items-center justify-center",
         )}
         onClick={handleNext}
       >
@@ -101,7 +118,7 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
       </div>
 
       {/* 章节分页 */}
-      <div class="absolute right-4 bottom-3 rounded-md px-3 py-1 text-sm text-stone-500">
+      <div class="absolute right-4 bottom-3 rounded-md px-3 py-1 text-sm text-stone-500 select-none">
         {curChapter.get()} / {totalChapters.get()}
       </div>
     </div>

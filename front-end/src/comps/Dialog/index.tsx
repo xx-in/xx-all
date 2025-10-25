@@ -10,6 +10,7 @@ interface IDialogProps {
   onClick?: () => void;
   title?: string;
   visible: boolean;
+  closeOnClickMask?: boolean;
 }
 
 export function Dialog(props: IProps<IDialogProps>) {
@@ -19,13 +20,15 @@ export function Dialog(props: IProps<IDialogProps>) {
     onClick,
     title,
     visible,
+    closeOnClickMask,
   } = useProps(props, {
     class: "",
     title: "",
+    closeOnClickMask: true,
   });
 
   const baseClass = twMerge([
-    "w-9/10 lg:w-3/4 overflow-hidden mt-10 max-h-8/9 flex justify-center rounded-lg flex-col p-0 bg-stone-500  shadow-lg border border-black/60",
+    "w-auto max-w-9/10 lg:max-w-3/4 overflow-hidden mt-10 max-h-8/9 flex justify-center rounded-lg flex-col p-0 bg-stone-500  shadow-lg border border-black/60",
   ]);
   function handleClick(e: MouseEvent) {
     e.stopPropagation();
@@ -54,13 +57,19 @@ export function Dialog(props: IProps<IDialogProps>) {
     }
   });
 
+  function handleClickMask() {
+    if (closeOnClickMask) {
+      handleClose();
+    }
+  }
+
   return (
     <>
       <Show when={visible.get()}>
         <Portal>
           <section
             class="absolute top-0 left-0 z-10 flex h-screen w-screen justify-center bg-black/60 text-center outline-none"
-            onClick={handleClose}
+            onClick={handleClickMask}
             tabIndex={0}
             ref={e => (refMask = e)}
             onkeydown={handleKeyDown}

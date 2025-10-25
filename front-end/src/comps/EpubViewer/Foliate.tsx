@@ -5,11 +5,12 @@ import { twMerge } from "tailwind-merge";
 import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
 
-interface IEpubViewer {
+interface IEpubViewerFoliate {
   url: string;
+  class?: string;
 }
-export function EpubViewerFoliate(props: IProps<IEpubViewer>) {
-  const { url } = useProps(props, {});
+export function EpubViewerFoliate(props: IProps<IEpubViewerFoliate>) {
+  const { url, class: className } = useProps(props, { class: "" });
   let refContainer: HTMLDivElement;
 
   const book = useSignal<any>(null);
@@ -25,7 +26,6 @@ export function EpubViewerFoliate(props: IProps<IEpubViewer>) {
   useEffect(async () => {
     refContainer.innerHTML = "";
     const view = new View();
-    console.log("??view", view);
     book.set(view);
     view.style.height = "100%";
     view.style.width = "100%";
@@ -37,7 +37,7 @@ export function EpubViewerFoliate(props: IProps<IEpubViewer>) {
   });
 
   return (
-    <div class="relative size-full py-5">
+    <div class={twMerge("relative h-full py-5 lg:w-[1400px]", className.get())}>
       <div ref={e => (refContainer = e)} class="mx-auto h-full px-2"></div>
       <div
         class={twMerge(

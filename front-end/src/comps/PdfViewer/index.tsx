@@ -1,9 +1,11 @@
+import { twMerge } from "tailwind-merge";
 import pdfjsLib from "./pdfWorker.ts";
-import { useEffect, useProps, useSignal, type IProps } from "@/utils";
+import { useEffect, useProps, useSignal, type ClassName, type IProps } from "@/utils";
 
 interface IPdfViewerProps {
   url: string;
   preload?: number; // 预加载范围，比如2表示前后各加载2页
+  class?: ClassName;
 }
 
 let currentLoadId = 0;
@@ -14,7 +16,7 @@ const ENABLE_XFA = true;
 
 export function PdfViewer(props: IProps<IPdfViewerProps>) {
   let containerRef: HTMLDivElement;
-  const { url, preload } = useProps(props, { preload: 2 });
+  const { url, preload, class: className } = useProps(props, { preload: 2, class: "" });
 
   const pdfDoc = useSignal<pdfjsLib.PDFDocumentProxy | null>(null);
   const renderedPages = new Set<number>(); // 已渲染页
@@ -148,7 +150,7 @@ export function PdfViewer(props: IProps<IPdfViewerProps>) {
   }
 
   return (
-    <div class="size-full">
+    <div class={twMerge("size-full", className.get())}>
       <div
         ref={containerRef!}
         class="size-full overflow-auto"

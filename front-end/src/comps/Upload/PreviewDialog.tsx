@@ -9,7 +9,7 @@ import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
 import { PdfViewer } from "@comps/PdfViewer";
 import { EpubViewer } from "@comps/EpubViewer";
-// import { EpubViewerFoliate } from "@comps/EpubViewer/Foliate";
+import { ImageViewer } from "@comps/ImageViewer";
 
 interface IPreviewDialogProps {
   visible: boolean;
@@ -116,20 +116,21 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
 
   return (
     <Dialog visible={visible} title={fileName}>
-      <div class="relative size-full bg-stone-50">
+      <div class="relative h-full w-[1000px] bg-stone-50">
         <Switch>
           {/* pdf */}
           <Match when={isPdf(fileType.get())}>
             {/* <PdfViewer file={fileUrl} /> */}
-            <PdfViewer url={fileUrl} />
+            <PdfViewer url={fileUrl} class="mx-auto" />
           </Match>
           <Match when={isEpub(fileType.get())}>
-            <EpubViewer file={file} />
-            {/* <EpubViewerFoliate url={fileUrl} /> */}
+            {/* <EpubViewer file={file} url={fileUrl} isScrolled={true} /> */}
+            <EpubViewer file={file} flow={"scrolled"} class="mx-auto" spread={"none"} />
           </Match>
           {/* 图片 */}
           <Match when={isImage(fileType.get())}>
-            <img src={fileUrl.get()} class="mx-auto size-full object-contain" />
+            <ImageViewer src={fileUrl} />
+            {/* <img src={fileUrl.get()} class="mx-auto size-full object-contain" /> */}
           </Match>
           {/* 其他 */}
           <Match when={true}>
@@ -138,9 +139,9 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
               <a
                 href={fileUrl.get()}
                 download={fileName.get()}
-                class="text-blue-500 underline underline-offset-2"
+                class="w-1/2 text-blue-500 underline underline-offset-2"
               >
-                下载 {fileName.get()}
+                <span>{fileName.get()}</span>
               </a>
             </Flex>
           </Match>
