@@ -93,8 +93,6 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
 
   return (
     <div class={twMerge("relative flex size-full", className.get())}>
-      {/* epub内容容器 */}
-
       {/* 左翻页按钮 */}
       <div
         class={twMerge(
@@ -105,6 +103,7 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
         <SvgLeftBold class="size-6 scale-y-125 text-stone-200 group-hover:text-black" />
       </div>
 
+      {/* epub内容容器 */}
       <div ref={e => (refContainer = e)} class="h-full flex-1 py-2"></div>
 
       {/* 右翻页按钮 */}

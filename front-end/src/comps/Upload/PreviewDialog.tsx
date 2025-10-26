@@ -10,6 +10,7 @@ import { SvgRightBold } from "@comps/Svg/RightBold";
 import { PdfViewer } from "@comps/PdfViewer";
 import { EpubViewer } from "@comps/EpubViewer";
 import { ImageViewer } from "@comps/ImageViewer";
+import { CodeEditor } from "@comps/CodeEditor";
 
 interface IPreviewDialogProps {
   visible: boolean;
@@ -28,7 +29,9 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
 
   const fileType = useSignal(() => {
     if (file.get()) {
-      return file.get()!.type;
+      const type = file.get()!.type;
+      console.log("??type", file.get(), type);
+      return type;
     }
     return "";
   });
@@ -68,6 +71,39 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
       heif: "image/heif",
     };
     return Object.values(map).includes(type);
+  }
+
+  /**
+   * 判断是否是文字格式
+   * @param type
+   * @returns
+   */
+  function isTextByExt(fileName: string) {
+    // 常见 Monaco 支持的文本文件扩展名
+    const textExts = [
+      "js",
+      "ts",
+      "jsx",
+      "tsx",
+      "json",
+      "html",
+      "css",
+      "md",
+      "py",
+      "c",
+      "cpp",
+      "java",
+      "xml",
+      "yml",
+      "yaml",
+      "sh",
+      "sql",
+      "txt",
+      "lua",
+    ];
+
+    const ext = fileName.split(".").pop()?.toLowerCase() || "";
+    return textExts.includes(ext);
   }
 
   function isPdf(type: string) {
@@ -132,6 +168,10 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
             <ImageViewer src={fileUrl} />
             {/* <img src={fileUrl.get()} class="mx-auto size-full object-contain" /> */}
           </Match>
+          <Match when={isTextByExt(fileName.get())}>
+            <CodeEditor file={file} />
+          </Match>
+
           {/* 其他 */}
           <Match when={true}>
             <Flex class="h-full w-full flex-col justify-center gap-4 py-10">
