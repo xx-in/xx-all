@@ -61,6 +61,8 @@ export function CodeEditor(props: IProps<ICodeEditorProps>) {
       wordWrap: "on",
       wrappingIndent: "none",
       tabSize: 4,
+      // 👇 禁用粘性代码（Sticky Scroll）
+      stickyScroll: { enabled: false },
       // 滚动条
       scrollbar: {
         horizontal: "hidden",

@@ -14,7 +14,7 @@ export function Title(props: IProps<IDialogTitleProps>) {
   }
   return (
     <div
-      class="flex min-h-12 shrink-0 grow-0 items-center justify-between rounded-sm border-b border-b-stone-200 bg-gray-100 px-2 pt-1 select-none"
+      class="flex min-h-12 shrink-0 grow-0 items-center justify-between border-b border-b-stone-200 bg-gray-100 px-2 pt-1 select-none"
       title={children.get()}
     >
       <div class="max-w-[900px] flex-1 truncate px-24 font-bold">{children.get()}</div>
