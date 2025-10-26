@@ -68,7 +68,7 @@ export function Dialog(props: IProps<IDialogProps>) {
       <Show when={visible.get()}>
         <Portal>
           <section
-            class="absolute top-0 left-0 z-10 flex h-screen w-screen justify-center bg-black/60 text-center outline-none"
+            class="fixed top-0 left-0 z-10 flex h-screen w-screen justify-center bg-black/60 text-center outline-none"
             onClick={handleClickMask}
             tabIndex={0}
             ref={e => (refMask = e)}

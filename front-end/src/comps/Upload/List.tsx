@@ -62,7 +62,7 @@ export function List(
   return (
     <>
       <Show when={files.get().length}>
-        <Grid class="mt-2 grid-cols-1 gap-x-3 gap-y-2 overflow-auto pr-1 sm:grid-cols-2 lg:grid-cols-3">
+        <Grid class="mt-2 grid-cols-1 gap-x-3 gap-y-2 overflow-auto pr-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <For each={files.get()}>
             {(file, index) => {
               return (
