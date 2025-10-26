@@ -26,3 +26,5 @@ export function throttle<T extends (...args: any[]) => void>(fn: T, delay = 300)
     }, delay);
   }) as T;
 }
+
+export * from "./file";

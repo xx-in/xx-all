@@ -37,7 +37,6 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
       });
 
       rendition.display();
-
       curBook.set(rendition);
 
       setStyles({
@@ -62,13 +61,36 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
         totalChapters.set(book.spine.items.length);
       });
 
-      // 当翻页或跳转章节时更新当前章节
+      // 翻页时更新当前章节
       rendition.on("relocated", (location: any) => {
         const spineIndex = book.spine.items.findIndex(
           (item: any) => item.href === location.start.href,
         );
         if (spineIndex >= 0) {
           curChapter.set(spineIndex + 1);
+        }
+      });
+
+      // ✅ 每次章节渲染完成时，在结尾添加提示段落
+      rendition.on("rendered", (section: any, view: any) => {
+        const doc = view.document;
+        if (!doc) return;
+
+        // 避免重复插入
+        if (!doc.querySelector("#chapter-end-hint")) {
+          const endHint = doc.createElement("p");
+          endHint.id = "chapter-end-hint";
+          endHint.textContent = "—— 本章节已结束 ——";
+          Object.assign(endHint.style, {
+            textAlign: "center",
+            color: "#999",
+            fontSize: "0.9em",
+            marginTop: "2em",
+            marginBottom: "2em",
+            fontStyle: "italic",
+          });
+
+          doc.body.appendChild(endHint);
         }
       });
     }
@@ -80,7 +102,6 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
    */
   function setStyles(style: object) {
     curBook.get().themes.default(style);
-    console.log(curBook.get());
   }
 
   function handleNext() {
@@ -93,6 +114,9 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
 
   return (
     <div class={twMerge("relative flex size-full", className.get())}>
+      {/* epub内容容器 */}
+      <div ref={e => (refContainer = e)} class="h-full flex-1 py-2"></div>
+
       {/* 左翻页按钮 */}
       <div
         class={twMerge(
@@ -102,9 +126,6 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
       >
         <SvgLeftBold class="size-6 scale-y-125 text-stone-200 group-hover:text-black" />
       </div>
-
-      {/* epub内容容器 */}
-      <div ref={e => (refContainer = e)} class="h-full flex-1 py-2"></div>
 
       {/* 右翻页按钮 */}
       <div
@@ -117,7 +138,7 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
       </div>
 
       {/* 章节分页 */}
-      <div class="absolute right-4 bottom-3 rounded-md px-3 py-1 text-sm text-stone-500 select-none">
+      <div class="absolute right-4 bottom-4 rounded-md text-sm text-stone-500 select-none">
         {curChapter.get()} / {totalChapters.get()}
       </div>
     </div>

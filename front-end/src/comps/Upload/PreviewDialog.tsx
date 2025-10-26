@@ -1,9 +1,17 @@
-import { type IProps, useProps, useSignal, fileToUrl } from "@/utils";
+import {
+  type IProps,
+  useProps,
+  useSignal,
+  fileToUrl,
+  isPdf,
+  isEpub,
+  isImage,
+  isText,
+} from "@/utils";
 import { Switch, Match } from "solid-js";
 import { Dialog } from "@comps/Dialog";
 import { Flex } from "@comps/Flex";
 import { Button } from "@comps/Button";
-import { SvgFullScreen } from "@comps/Svg/FullScreen";
 import { SvgDownload } from "@comps/Svg/Download";
 import { SvgLeftBold } from "@comps/Svg/LeftBold";
 import { SvgRightBold } from "@comps/Svg/RightBold";
@@ -11,6 +19,7 @@ import { PdfViewer } from "@comps/PdfViewer";
 import { EpubViewer } from "@comps/EpubViewer";
 import { ImageViewer } from "@comps/ImageViewer";
 import { CodeEditor } from "@comps/CodeEditor";
+import { SvgShare } from "@comps/Svg/Share";
 
 interface IPreviewDialogProps {
   visible: boolean;
@@ -27,15 +36,6 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
     files: [],
   });
 
-  const fileType = useSignal(() => {
-    if (file.get()) {
-      const type = file.get()!.type;
-      console.log("??type", file.get(), type);
-      return type;
-    }
-    return "";
-  });
-
   const fileName = useSignal(() => {
     if (file.get()) {
       return file.get()!.name;
@@ -49,70 +49,6 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
     }
     return "";
   });
-
-  /**
-   * 是图片类型么
-   * @param type
-   * @returns
-   */
-  function isImage(type: string) {
-    const map = {
-      jpg: "image/jpeg",
-      jpeg: "image/jpeg",
-      png: "image/png",
-      gif: "image/gif",
-      webp: "image/webp",
-      bmp: "image/bmp",
-      svg: "image/svg+xml",
-      tiff: "image/tiff",
-      tif: "image/tiff",
-      ico: "image/x-icon",
-      heic: "image/heic",
-      heif: "image/heif",
-    };
-    return Object.values(map).includes(type);
-  }
-
-  /**
-   * 判断是否是文字格式
-   * @param type
-   * @returns
-   */
-  function isTextByExt(fileName: string) {
-    // 常见 Monaco 支持的文本文件扩展名
-    const textExts = [
-      "js",
-      "ts",
-      "jsx",
-      "tsx",
-      "json",
-      "html",
-      "css",
-      "md",
-      "py",
-      "c",
-      "cpp",
-      "java",
-      "xml",
-      "yml",
-      "yaml",
-      "sh",
-      "sql",
-      "txt",
-      "lua",
-    ];
-
-    const ext = fileName.split(".").pop()?.toLowerCase() || "";
-    return textExts.includes(ext);
-  }
-
-  function isPdf(type: string) {
-    return type.includes("pdf");
-  }
-
-  function isEpub(type: string) {
-    return type.includes("epub");
-  }
 
   /**
    * 在新标签页打开
@@ -132,6 +68,9 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
     a.remove();
   }
 
+  /**
+   * 下一个文件
+   */
   function handleNext() {
     let index = files.get().findIndex(curFile => curFile == file.get());
     index += 1;
@@ -141,6 +80,9 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
     file.set(files.get()[index]);
   }
 
+  /**
+   * 上一个文件
+   */
   function handlePre() {
     let index = files.get().findIndex(curFile => curFile == file.get());
     index -= 1;
@@ -155,20 +97,19 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
       <div class="relative h-full w-[1000px] bg-stone-50">
         <Switch>
           {/* pdf */}
-          <Match when={isPdf(fileType.get())}>
+          <Match when={isPdf(fileName.get())}>
             {/* <PdfViewer file={fileUrl} /> */}
             <PdfViewer url={fileUrl} class="mx-auto" />
           </Match>
-          <Match when={isEpub(fileType.get())}>
-            {/* <EpubViewer file={file} url={fileUrl} isScrolled={true} /> */}
+          {/* epub */}
+          <Match when={isEpub(fileName.get())}>
             <EpubViewer file={file} flow={"scrolled"} class="mx-auto" spread={"none"} />
           </Match>
           {/* 图片 */}
-          <Match when={isImage(fileType.get())}>
+          <Match when={isImage(fileName.get())}>
             <ImageViewer src={fileUrl} />
-            {/* <img src={fileUrl.get()} class="mx-auto size-full object-contain" /> */}
           </Match>
-          <Match when={isTextByExt(fileName.get())}>
+          <Match when={isText(fileName.get())}>
             <CodeEditor file={file} />
           </Match>
 
@@ -187,7 +128,7 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
           </Match>
         </Switch>
 
-        {/* 左右翻页 */}
+        {/* 左翻页 */}
         <Button
           class={
             "fixed top-1/2 left-10 size-8 -translate-y-1/2 rounded-full bg-stone-600/70 p-2 text-white hover:bg-stone-500/70 sm:left-2 lg:left-10 lg:size-14"
@@ -196,6 +137,7 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
         >
           <SvgLeftBold class="lg:size-6" />
         </Button>
+        {/* 右翻页 */}
 
         <Button
           class={
@@ -207,15 +149,15 @@ export function PreviewDialog(props: IProps<IPreviewDialogProps>) {
         </Button>
 
         {/* 操作按钮组 */}
-        <Flex class="absolute right-3 bottom-15 flex-col gap-2 p-2 text-stone-300">
-          <SvgFullScreen
-            tip="全屏"
-            class="size-8 cursor-pointer bg-stone-700 p-2 hover:text-white"
+        <Flex class="absolute right-3 bottom-15 flex-col gap-4 p-2 text-stone-500">
+          <SvgShare
+            tip="在新建标签页打开"
+            class="size-8 cursor-pointer rounded-full bg-stone-200 p-2 hover:bg-blue-100 hover:text-blue-500"
             onClick={handleJump}
           />
           <SvgDownload
             tip="下载"
-            class="size-8 cursor-pointer bg-stone-700 p-2 hover:text-white"
+            class="size-8 cursor-pointer rounded-full bg-stone-200 p-2 hover:bg-blue-100 hover:text-blue-500"
             onClick={handleDown}
           />
         </Flex>

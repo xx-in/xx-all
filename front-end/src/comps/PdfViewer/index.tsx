@@ -157,7 +157,7 @@ export function PdfViewer(props: IProps<IPdfViewerProps>) {
         onScroll={handleScroll}
         onMouseOver={handleMouseOver}
       ></div>
-      <div class="absolute bottom-2 left-2 z-10 rounded-sm bg-black/10 px-4 py-1 text-stone-500">
+      <div class="absolute right-4 bottom-4 rounded-md text-sm text-stone-500 select-none">
         {currentPageNum.get()} / {pdfDoc.get()?.numPages}
       </div>
     </div>
