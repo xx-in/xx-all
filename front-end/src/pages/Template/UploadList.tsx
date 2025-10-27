@@ -1,6 +1,7 @@
 import { Button } from "@comps/Button";
 import { Upload } from "@comps/Upload";
 import { useSignal, stringifyJSON, parseJSON, parseResponse } from "@/utils";
+import { Card } from "@comps/Card";
 
 export default function UploadList() {
   const files = useSignal<File[]>([]);
@@ -19,10 +20,13 @@ export default function UploadList() {
 
   return (
     <div class="px-4">
-      <Upload files={files} limitSize={Infinity} />
-      <div class="mt-2">
-        <Button onClick={handleSave}>保存</Button>
-      </div>
+      <Card>
+        <Card.Title>文件上传</Card.Title>
+        <Upload files={files} limitSize={Infinity} />
+        <div class="mt-2">
+          <Button onClick={handleSave}>保存</Button>
+        </div>
+      </Card>
     </div>
   );
 }

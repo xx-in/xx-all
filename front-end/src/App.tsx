@@ -12,10 +12,6 @@ const routes = [
     component: lazy(() => import("./pages/Test/index.tsx")),
   },
   {
-    path: "/temp",
-    component: lazy(() => import("./pages/Temp/index.tsx")),
-  },
-  {
     path: "/template",
     component: lazy(() => import("./pages/Template/index.tsx")),
   },
