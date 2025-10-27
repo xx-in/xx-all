@@ -5,26 +5,26 @@ function toPx(n: number) {
   return n + "px";
 }
 
-interface ILayoutLeftProps {
-  width?: number;
+interface ILayoutTopProps {
+  height?: number;
   children?: Children;
   class?: ClassName;
 }
-export function Left(props: IProps<ILayoutLeftProps>) {
+
+export function Top(props: IProps<ILayoutTopProps>) {
   const {
-    width,
+    height,
     children,
     class: className,
-  } = useProps(props, { class: "", width: 300, children: "" });
+  } = useProps(props, { class: "", height: 40, children: "" });
   const dragging = useSignal(false);
-  let startX = 0;
-  let startWidth = 0;
+  let startY = 0;
+  let startHeight = 0;
 
   const onPointerDown = (e: PointerEvent) => {
     dragging.set(true);
-    startX = e.clientX;
-    startWidth = width.get();
-    // 捕获全局事件
+    startY = e.clientY;
+    startHeight = height.get();
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerUp);
     e.preventDefault();
@@ -32,8 +32,8 @@ export function Left(props: IProps<ILayoutLeftProps>) {
 
   const onPointerMove = (e: PointerEvent) => {
     if (!dragging.get()) return;
-    const delta = e.clientX - startX;
-    width.set(Math.max(50, startWidth + delta)); // 最小宽度50px
+    const delta = e.clientY - startY;
+    height.set(Math.max(40, startHeight + delta)); // 最小高度50px
   };
 
   const onPointerUp = () => {
@@ -44,12 +44,12 @@ export function Left(props: IProps<ILayoutLeftProps>) {
 
   return (
     <div
-      class={twMerge("relative h-full flex-none break-all", className.get())}
-      style={{ width: toPx(width.get()) }}
+      class={twMerge("relative w-full flex-none", className.get())}
+      style={{ height: toPx(height.get()) }}
     >
-      <div class="h-full overflow-y-auto pr-3">{children}</div>
+      <div class="h-full w-full overflow-x-auto px-3">{children}</div>
       <div
-        class="absolute top-0 right-0 z-10 h-full w-1 cursor-col-resize bg-transparent duration-200 hover:bg-blue-400"
+        class="absolute bottom-0 left-0 z-10 h-1 w-full cursor-row-resize bg-transparent duration-200 hover:bg-blue-400"
         onPointerDown={onPointerDown}
       ></div>
     </div>

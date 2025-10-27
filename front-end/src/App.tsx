@@ -1,6 +1,7 @@
 import "./App.css";
 import { Router } from "@solidjs/router";
 import { lazy } from "solid-js";
+import "./hmr.ts";
 
 const routes = [
   {

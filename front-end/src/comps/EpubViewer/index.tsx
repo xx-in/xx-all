@@ -72,7 +72,7 @@ export function EpubViewer(props: IProps<IEpubViewer>) {
       });
 
       // ✅ 每次章节渲染完成时，在结尾添加提示段落
-      rendition.on("rendered", (section: any, view: any) => {
+      rendition.on("rendered", (_section: any, view: any) => {
         const doc = view.document;
         if (!doc) return;
 

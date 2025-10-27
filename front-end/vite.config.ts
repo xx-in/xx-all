@@ -15,6 +15,9 @@ export default defineConfig({
     target: "esnext"
   },
   server: {
+    watch: {
+      usePolling: true,
+    },
     proxy: {
       // 当遇到 /api 前缀时，会转发到 target
       '/api': {

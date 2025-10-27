@@ -3,6 +3,7 @@ import { ButtonList } from "./ButtonList";
 import FormList from "./FormList";
 import UploadList from "./UploadList";
 import ValidateForm from "./ValidateForm";
+import LayoutList from "./LayoutList";
 
 export default function Template() {
   return (
@@ -13,6 +14,7 @@ export default function Template() {
         <FormList />
         <ValidateForm />
         <UploadList />
+        <LayoutList />
       </div>
     </>
   );

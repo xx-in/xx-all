@@ -60,7 +60,7 @@ export function CodeEditor(props: IProps<ICodeEditorProps>) {
       // 自动换行并取消缩进
       wordWrap: "on",
       wrappingIndent: "none",
-      tabSize: 4,
+      tabSize: 2,
       // 👇 禁用粘性代码（Sticky Scroll）
       stickyScroll: { enabled: false },
       // 滚动条

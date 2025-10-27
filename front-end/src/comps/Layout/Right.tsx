@@ -10,7 +10,7 @@ interface ILayoutLeftProps {
   children?: Children;
   class?: ClassName;
 }
-export function Left(props: IProps<ILayoutLeftProps>) {
+export function Right(props: IProps<ILayoutLeftProps>) {
   const {
     width,
     children,
@@ -33,7 +33,7 @@ export function Left(props: IProps<ILayoutLeftProps>) {
   const onPointerMove = (e: PointerEvent) => {
     if (!dragging.get()) return;
     const delta = e.clientX - startX;
-    width.set(Math.max(50, startWidth + delta)); // 最小宽度50px
+    width.set(Math.max(50, startWidth - delta)); // 最小宽度50px
   };
 
   const onPointerUp = () => {
@@ -44,14 +44,17 @@ export function Left(props: IProps<ILayoutLeftProps>) {
 
   return (
     <div
-      class={twMerge("relative h-full flex-none break-all", className.get())}
+      class={twMerge(
+        "relative h-full flex-none border-r border-stone-200 break-all",
+        className.get(),
+      )}
       style={{ width: toPx(width.get()) }}
     >
-      <div class="h-full overflow-y-auto pr-3">{children}</div>
       <div
-        class="absolute top-0 right-0 z-10 h-full w-1 cursor-col-resize bg-transparent duration-200 hover:bg-blue-400"
+        class="absolute top-0 left-0 z-10 h-full w-1 cursor-col-resize bg-transparent duration-200 hover:bg-blue-400"
         onPointerDown={onPointerDown}
       ></div>
+      <div class="h-full overflow-y-auto pr-2 pl-1">{children}</div>
     </div>
   );
 }
