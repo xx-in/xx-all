@@ -66,13 +66,13 @@ export function useSignal<T>(val: T | ISignal<T>) {
 type IDatas<T> = {
   // 普通属性：非 on 开头，非 children
   [K in keyof Required<T> as K extends `on${string}` | `${string}hildren` | `${string}Comp`
-  ? never
-  : K]: ISignal<NonUndefined<T[K]>>;
+    ? never
+    : K]: ISignal<NonUndefined<T[K]>>;
 } & {
   // on 开头属性或 children：保持原样
   [K in keyof T as K extends `on${string}` | `${string}hildren` | `${string}Comp`
-  ? K
-  : never]: T[K];
+    ? K
+    : never]: T[K];
 };
 
 /**
@@ -114,10 +114,10 @@ export function useProps<T extends Record<string, any>>(
  */
 type RequiredFromOptional<T> = {
   [K in keyof T as {} extends Pick<T, K>
-  ? K extends `on${string}`
-  ? never
-  : K // 不处理 on 开头的
-  : never]-?: T[K];
+    ? K extends `on${string}`
+      ? never
+      : K // 不处理 on 开头的
+    : never]-?: T[K];
 };
 
 /**
@@ -144,19 +144,17 @@ export function useContainerWidth(id: string) {
   return width;
 }
 
-
-export type ISignalDeep<T> = T extends (infer U)[]
-  ? ISignal<ISignalDeep<U>>[]
+// 基本类型映射
+type MapType<T> = T extends (infer U)[]
+  ? ISignal<MapType<U>[]>
   : T extends object
-  ? { [K in keyof T]: ISignalDeep<T[K]> }
-  : ISignal<T>;
+    ? ISignal<{ [K in keyof T]: MapType<T[K]> }>
+    : ISignal<T>;
 
-export function useDeepSignal<T>(value: T): ISignalDeep<T> {
-  
+export function useDeepSignal<T>(value: T): MapType<T> {
   if (Array.isArray(value)) {
     return useSignal(value.map(item => useDeepSignal(item))) as any;
   }
-
   if (typeof value === "object" && value !== null) {
     const wrappedObj: Record<string, any> = {};
     for (const key in value) {
@@ -164,8 +162,7 @@ export function useDeepSignal<T>(value: T): ISignalDeep<T> {
         wrappedObj[key] = useDeepSignal(value[key]);
       }
     }
-    return useSignal(wrappedObj) as ISignalDeep<T>;
+    return useSignal(wrappedObj) as any;
   }
-
-  return useSignal(value) as ISignalDeep<T>;
+  return useSignal(value) as any;
 }
