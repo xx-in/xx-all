@@ -17,7 +17,7 @@ export function Suffix(props: IProps<ISuffixProps>) {
     class: "",
   });
 
-  const baseClass = twMerge(["border-l-1 border-gray-300 px-2 outline-hidden"]);
+  const baseClass = twMerge(["flex-none border-l-1 border-gray-300 px-2 outline-hidden"]);
 
   return (
     <Flex class={twMerge(baseClass, className.get())} onClick={onClick}>

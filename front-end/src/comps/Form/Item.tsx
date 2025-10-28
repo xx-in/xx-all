@@ -1,7 +1,22 @@
-import { useProps, type Children, type ClassName, type IProps } from "@/utils";
+import {
+  randomId,
+  throttle,
+  useContainerWidth,
+  useDestroy,
+  useEffect,
+  useMount,
+  useProps,
+  useSignal,
+  type Children,
+  type ClassName,
+  type IProps,
+  type ISignal,
+} from "@/utils";
 import { twMerge } from "tailwind-merge";
 import { Flex } from "@comps/Flex";
-import { Show } from "solid-js";
+import { Match, onMount, Show, Switch } from "solid-js";
+import { ItemHorizontal } from "./ItemHorizontal";
+import { ItemVertical } from "./ItemVertical";
 
 export interface IFormItemProps {
   children: Children;
@@ -12,52 +27,29 @@ export interface IFormItemProps {
   showColon?: boolean;
   isRequired?: boolean;
   error?: string;
+  direction?: "vertical" | "horizontal";
 }
 
-/**
- * 水平组件
- * @param props
- * @returns
- */
 export function Item(props: IProps<IFormItemProps>) {
-  const {
-    children,
-    class: className,
-    onClick,
-    label,
-    labelClass,
-    showColon,
-    isRequired,
-    error,
-  } = useProps(props, {
+  const { direction, ...rest } = useProps(props, {
     class: "",
     showColon: true,
     labelClass: "",
     isRequired: false,
     error: "",
+    direction: "horizontal",
   });
 
-  const baseClass = twMerge([
-    "flex items-center flex-wrap justify-start",
-    "mb-1 gap-1 pb-5 relative",
-  ]);
+  const id = randomId();
+  const width = useContainerWidth(id);
 
   return (
-    <Flex class={twMerge(baseClass, className.get())} onClick={onClick}>
-      <div class={twMerge("w-20", labelClass.get())}>
-        <Show when={isRequired.get()}>
-          <span class="pr-0.5 text-red-500">*</span>
-        </Show>
-        {label.get()}
-        <Show when={showColon.get()}>
-          <span>：</span>
-        </Show>
-      </div>
-      <div class="w-full flex-1">{children}</div>
-      <div class="absolute bottom-0 left-0 flex gap-2 pl-1 text-xs text-red-500">
-        <div class={twMerge("h-1 w-20", labelClass.get())}></div>
-        {error.get()}
-      </div>
-    </Flex>
+    <div class="@container" id={id}>
+      <Switch fallback={<ItemVertical {...rest} />}>
+        <Match when={direction.get() == "horizontal" && width.get() > 640}>
+          <ItemHorizontal {...rest} />
+        </Match>
+      </Switch>
+    </div>
   );
 }

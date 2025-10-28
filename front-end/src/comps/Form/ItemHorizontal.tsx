@@ -1,17 +1,15 @@
-import { useProps, type IProps } from "@/utils";
+import { useProps, type Children, type ClassName, type IProps } from "@/utils";
 import { twMerge } from "tailwind-merge";
 import { Flex } from "@comps/Flex";
 import { Show } from "solid-js";
-import { type IFormItemProps } from "./Item";
-
-interface IFormItemVerticalProps extends IFormItemProps {}
+import type { IFormItemProps } from "./Item";
 
 /**
- * 垂直组件
+ * 水平组件
  * @param props
  * @returns
  */
-export function ItemVertical(props: IProps<IFormItemVerticalProps>) {
+export function ItemHorizontal(props: IProps<IFormItemProps>) {
   const {
     children,
     class: className,
@@ -23,22 +21,22 @@ export function ItemVertical(props: IProps<IFormItemVerticalProps>) {
     error,
   } = useProps(props, {
     class: "",
-    showColon: false,
+    showColon: true,
     labelClass: "",
     isRequired: false,
     error: "",
-    direction: "vertical",
+    direction: "horizontal",
   });
 
   const baseClass = twMerge([
-    "flex items-center flex-wrap justify-start flex-col gap-2",
-    "relative pb-5 mb-1",
+    "flex items-center flex-wrap justify-start",
+    "mb-1 gap-1 pb-5 relative",
   ]);
 
   return (
     <Flex class={twMerge(baseClass, className.get())} onClick={onClick}>
       {/* 标签 */}
-      <div class={twMerge("pl-1", labelClass.get(), "w-full")}>
+      <div class={twMerge("w-20", labelClass.get())}>
         <Show when={isRequired.get()}>
           <span class="pr-0.5 text-red-500">*</span>
         </Show>
@@ -50,7 +48,10 @@ export function ItemVertical(props: IProps<IFormItemVerticalProps>) {
       {/* 内容 */}
       <div class="w-full flex-1">{children}</div>
       {/* 告警 */}
-      <div class="absolute bottom-0 left-0 pl-1 text-xs text-red-500">{error.get()}</div>
+      <div class="absolute bottom-0 left-0 flex gap-2 pl-1 text-xs text-red-500">
+        <div class={twMerge("h-1 w-20", labelClass.get())}></div>
+        {error.get()}
+      </div>
     </Flex>
   );
 }

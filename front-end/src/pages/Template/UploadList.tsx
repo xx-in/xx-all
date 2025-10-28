@@ -19,7 +19,7 @@ export default function UploadList() {
   }
 
   return (
-    <div class="px-4">
+    <div>
       <Card>
         <Card.Title>文件上传</Card.Title>
         <Upload files={files} limitSize={Infinity} />

@@ -44,7 +44,7 @@ export function Top(props: IProps<ILayoutTopProps>) {
 
   return (
     <div
-      class={twMerge("relative w-full flex-none", className.get())}
+      class={twMerge("relative w-full flex-none border-b border-transparent", className.get())}
       style={{ height: toPx(height.get()) }}
     >
       <div class="h-full w-full overflow-x-auto px-3">{children}</div>

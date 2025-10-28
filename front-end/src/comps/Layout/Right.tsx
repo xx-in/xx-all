@@ -15,7 +15,7 @@ export function Right(props: IProps<ILayoutLeftProps>) {
     width,
     children,
     class: className,
-  } = useProps(props, { class: "", width: 300, children: "" });
+  } = useProps(props, { class: "", width: 50, children: "" });
   const dragging = useSignal(false);
   let startX = 0;
   let startWidth = 0;
@@ -45,7 +45,7 @@ export function Right(props: IProps<ILayoutLeftProps>) {
   return (
     <div
       class={twMerge(
-        "relative h-full flex-none border-r border-stone-200 break-all",
+        "relative h-full flex-none border-l border-transparent break-all",
         className.get(),
       )}
       style={{ width: toPx(width.get()) }}

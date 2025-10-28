@@ -60,9 +60,9 @@ export function List(
   const previewFile = useSignal<File>(null);
 
   return (
-    <>
+    <div class="@container size-full">
       <Show when={files.get().length}>
-        <Grid class="mt-2 grid-cols-1 gap-x-3 gap-y-2 overflow-auto pr-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <Grid class="mt-2 grid-cols-1 gap-x-3 gap-y-2 overflow-auto pr-1 @sm:grid-cols-2 @lg:grid-cols-3 @xl:grid-cols-4">
           <For each={files.get()}>
             {(file, index) => {
               return (
@@ -99,7 +99,7 @@ export function List(
       </Show>
       {/* 预览弹窗 */}
       <PreviewDialog visible={previewVisible} file={previewFile} files={files}></PreviewDialog>
-    </>
+    </div>
   );
 }
 

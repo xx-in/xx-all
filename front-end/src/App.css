@@ -25,6 +25,12 @@
       transform: translateY(-1.5rem);
     }
   }
+
+  --container-sm: 40rem;
+  --container-md: 48rem;
+  --container-lg: 64rem;
+  --container-xl: 80rem;
+  --container-2xl: 96rem;
 }
 
 /* 移除原生 number 类型输入框的上下箭头 */

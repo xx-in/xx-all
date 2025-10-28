@@ -13,49 +13,51 @@ export default function FormList() {
     addToast("点击搜索");
   }
 
+  const labelWidth = "w-40";
+
   return (
-    <div class="px-4">
+    <div>
       <Card>
         <Card.Title>垂直表单</Card.Title>
         {/* <Flex>
-          <Button class={Button.blue}>校验</Button>
+          <Button baseClass={Button.blue}>校验</Button>
         </Flex> */}
         <Form>
-          <Form.ItemVertical label="文本类型" isRequired>
+          <Form.Item direction="vertical" label="文本类型" isRequired>
             <Input value={text} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="密码类型">
+          </Form.Item>
+          <Form.Item direction="vertical" label="密码类型">
             <Input type="password" value={password} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="禁用状态">
+          </Form.Item>
+          <Form.Item direction="vertical" label="禁用状态">
             <Input value={text} disabled />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="只读状态">
+          </Form.Item>
+          <Form.Item direction="vertical" label="只读状态">
             <Input value={text} readonly placeholder={"只读状态"} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="密码组件">
+          </Form.Item>
+          <Form.Item direction="vertical" label="密码组件">
             <Input.Password value={password} maxLength={2} />
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="密码组件 - 禁用">
+          <Form.Item direction="vertical" label="密码组件 - 禁用">
             <Input.Password disabled value={password} />
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="密码组件 - 只读">
+          <Form.Item direction="vertical" label="密码组件 - 只读">
             <Input.Password readonly value={password} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="可清空组件">
+          </Form.Item>
+          <Form.Item direction="vertical" label="可清空组件">
             <Input.Clearable />
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="组合组件">
+          <Form.Item direction="vertical" label="组合组件">
             <Input.Group
               prefixChildren={<Input.Prefix>前缀</Input.Prefix>}
               suffixChildren={<Input.Suffix>后缀</Input.Suffix>}
             ></Input.Group>
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="组合组件 - 搜索前缀">
+          <Form.Item direction="vertical" label="组合组件 - 搜索前缀">
             <Input.Group
               class="rounded-full pr-4"
               prefixChildren={
@@ -67,9 +69,9 @@ export default function FormList() {
                 </Input.Prefix>
               }
             ></Input.Group>
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="组合组件 - 搜索后缀">
+          <Form.Item direction="vertical" label="组合组件 - 搜索后缀">
             <Input.Group
               class="rounded-full pl-4"
               suffixChildren={
@@ -81,9 +83,9 @@ export default function FormList() {
                 </Input.Suffix>
               }
             ></Input.Group>
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="组合组件 - 后缀无边框">
+          <Form.Item direction="vertical" label="组合组件 - 后缀无边框">
             <Input.Group
               class="rounded-full pl-4"
               suffixChildren={
@@ -92,9 +94,9 @@ export default function FormList() {
                 </Input.Suffix>
               }
             ></Input.Group>
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="组合组件 - 长度限制">
+          <Form.Item direction="vertical" label="组合组件 - 长度限制">
             <Input.Group
               maxLength={12}
               suffixChildren={
@@ -106,73 +108,73 @@ export default function FormList() {
               }
               value={text}
             ></Input.Group>
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="最小值为0，最大值为10，精度为0，自动计算步长为1">
+          <Form.Item direction="vertical" label="最小值为0，最大值为10，精度为0，自动计算步长为1">
             <Input.Number min={0} max={10} precision={0} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="精度为1，自动计算步长为0.1">
+          </Form.Item>
+          <Form.Item direction="vertical" label="精度为1，自动计算步长为0.1">
             <Input.Number precision={1} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="精度为1，步长为1">
+          </Form.Item>
+          <Form.Item direction="vertical" label="精度为1，步长为1">
             <Input.Number precision={1} step={1} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="精度为4，步长为0.1">
+          </Form.Item>
+          <Form.Item direction="vertical" label="精度为4，步长为0.1">
             <Input.Number precision={4} step={0.1} />
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="无控制按钮">
+          <Form.Item direction="vertical" label="无控制按钮">
             <Input.Number controls={false} />
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="禁用状态">
+          <Form.Item direction="vertical" label="禁用状态">
             <Input.Number precision={4} step={0.1} disabled />
-          </Form.ItemVertical>
+          </Form.Item>
 
-          <Form.ItemVertical label="只读状态">
+          <Form.Item direction="vertical" label="只读状态">
             <Input.Number readonly precision={4} step={0.1} />
-          </Form.ItemVertical>
+          </Form.Item>
         </Form>
       </Card>
 
       <Card>
         <Card.Title>水平表单</Card.Title>
         <Form>
-          <Form.Item labelClass="w-40" label="文本类型" isRequired>
+          <Form.Item labelClass={labelWidth} label="文本类型" isRequired>
             <Input />
           </Form.Item>
-          <Form.Item labelClass="w-40" label="密码类型">
+          <Form.Item labelClass={labelWidth} label="密码类型">
             <Input type="password" value={password} />
           </Form.Item>
-          <Form.Item labelClass="w-40" label="禁用状态">
+          <Form.Item labelClass={labelWidth} label="禁用状态">
             <Input value={text} disabled />
           </Form.Item>
-          <Form.Item labelClass="w-40" label="只读状态">
+          <Form.Item labelClass={labelWidth} label="只读状态">
             <Input value={text} readonly placeholder={"只读状态"} />
           </Form.Item>
-          <Form.Item labelClass="w-40" label="密码组件">
+          <Form.Item labelClass={labelWidth} label="密码组件">
             <Input.Password value={password} maxLength={2} />
           </Form.Item>
 
-          <Form.Item labelClass="w-40" label="密码组件 - 禁用">
+          <Form.Item labelClass={labelWidth} label="密码组件 - 禁用">
             <Input.Password disabled value={password} />
           </Form.Item>
 
-          <Form.Item labelClass="w-40" label="密码组件 - 只读">
+          <Form.Item labelClass={labelWidth} label="密码组件 - 只读">
             <Input.Password readonly value={password} />
           </Form.Item>
-          <Form.Item labelClass="w-40" label="可清空组件">
+          <Form.Item labelClass={labelWidth} label="可清空组件">
             <Input.Clearable />
           </Form.Item>
 
-          <Form.Item labelClass="w-40" label="组合组件">
+          <Form.Item labelClass={labelWidth} label="组合组件">
             <Input.Group
               prefixChildren={<Input.Prefix>前缀</Input.Prefix>}
               suffixChildren={<Input.Suffix>后缀</Input.Suffix>}
             ></Input.Group>
           </Form.Item>
 
-          <Form.Item labelClass="w-40" label="组合组件 - 搜索">
+          <Form.Item labelClass={labelWidth} label="组合组件 - 搜索">
             <Input.Group
               class="rounded-full pl-4"
               suffixChildren={
@@ -186,7 +188,7 @@ export default function FormList() {
             ></Input.Group>
           </Form.Item>
 
-          <Form.Item labelClass="w-40" label="组合组件 - 长度限制">
+          <Form.Item labelClass={labelWidth} label="组合组件 - 长度限制">
             <Input.Group
               maxLength={12}
               suffixChildren={

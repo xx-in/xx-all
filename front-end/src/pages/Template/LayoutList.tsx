@@ -4,7 +4,7 @@ import { Layout } from "@comps/Layout";
 
 export default function LayoutList() {
   return (
-    <div class="px-4">
+    <div>
       <Card>
         <Card.Title>拖拽布局 - 左中右</Card.Title>
         <Layout class="h-96 w-full text-black">

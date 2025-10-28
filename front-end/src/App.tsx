@@ -19,5 +19,9 @@ const routes = [
 ];
 
 export default function App() {
-  return <Router>{routes}</Router>;
+  return (
+    <main class="@container h-screen w-screen">
+      <Router>{routes}</Router>
+    </main>
+  );
 }

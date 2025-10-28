@@ -53,16 +53,16 @@ export default function ValidateForm() {
   }
 
   return (
-    <div class="px-4">
+    <div>
       <Card>
         <Card.Title>表单校验</Card.Title>
         <Form class="">
-          <Form.ItemVertical label="用户名" error={text.error}>
+          <Form.Item direction={"vertical"} label="用户名" error={text.error}>
             <Input {...text} />
-          </Form.ItemVertical>
-          <Form.ItemVertical label="密码" error={name.error}>
+          </Form.Item>
+          <Form.Item direction={"vertical"} label="密码" error={name.error}>
             <Input {...name} />
-          </Form.ItemVertical>
+          </Form.Item>
           <Form.Item labelClass="w-24" label="用户名" error={text.error}>
             <Input {...text} />
           </Form.Item>
@@ -74,11 +74,11 @@ export default function ValidateForm() {
             <Input.Number {...age} />
           </Form.Item>
           <Flex class="mt-4 justify-end gap-6">
-            <Button class={Button.blue} onClick={handleValidate}>
+            <Button baseClass={Button.blue} onClick={handleValidate}>
               校验
             </Button>
 
-            <Button class={Button.red} onClick={handleClearErrors}>
+            <Button baseClass={Button.red} onClick={handleClearErrors}>
               清除校验结果
             </Button>
           </Flex>

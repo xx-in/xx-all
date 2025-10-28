@@ -1,7 +1,6 @@
 // src/components/CodeEditor.tsx
-import { createEffect, createSignal, onMount, onCleanup } from "solid-js";
 import * as monaco from "monaco-editor";
-import { useEffect, useProps, useSignal, type IProps } from "@/utils";
+import { useEffect, useMount, useProps, useSignal, type IProps } from "@/utils";
 import "./worker.ts";
 import "./index.css";
 
@@ -50,7 +49,7 @@ export function CodeEditor(props: IProps<ICodeEditorProps>) {
     return extToLang[ext] || "plaintext";
   };
 
-  onMount(() => {
+  useMount(() => {
     editor = monaco.editor.create(editorContainer, {
       value: "",
       language: "plaintext",

@@ -62,13 +62,13 @@ export function ButtonList() {
   }
 
   return (
-    <div class="px-4">
+    <div class="@container">
       <Card>
         <Card.Title>按钮组件</Card.Title>
-        <Grid class="grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10">
+        <Grid class="grid-cols-2 gap-4 @sm:grid-cols-4 @md:grid-cols-6 @lg:grid-cols-8 @xl:grid-cols-10">
           <For each={styles.get()}>
             {style => (
-              <Button class={Button[style]} onClick={handleCopy(style)}>
+              <Button baseClass={Button[style]} onClick={handleCopy(style)}>
                 {style}
               </Button>
             )}
@@ -78,10 +78,10 @@ export function ButtonList() {
 
       <Card>
         <Card.Title>按钮组件 - 禁用</Card.Title>
-        <Grid class="grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10">
+        <Grid class="grid-cols-2 gap-4 @sm:grid-cols-4 @md:grid-cols-6 @lg:grid-cols-8 @xl:grid-cols-10">
           <For each={styles.get()}>
             {style => (
-              <Button class={Button[style]} disabled>
+              <Button baseClass={Button[style]} disabled>
                 {style}
               </Button>
             )}
@@ -91,10 +91,10 @@ export function ButtonList() {
 
       <Card>
         <Card.Title>按钮组件 - 自定义</Card.Title>
-        <Grid class="grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10">
+        <Grid class="grid-cols-2 gap-4 @sm:grid-cols-4 @md:grid-cols-6 @lg:grid-cols-8 @xl:grid-cols-10">
           <For each={textStyles.get()}>
             {style => (
-              <Button class={twMerge(Button[style], "rounded-full bg-stone-50 shadow")}>
+              <Button baseClass={twMerge(Button[style], "rounded-full bg-stone-50 shadow")}>
                 {style}
               </Button>
             )}

@@ -1,3 +1,4 @@
+export * from "./type";
 export * from "./clipboard";
 export * from "./signal";
 export * from "./dom.tsx";
@@ -7,6 +8,7 @@ export * from "./base64";
 export * from "./jsx.tsx";
 export * from "./validate";
 export * from "./json.tsx";
+
 /**
  * 生成随机ID
  */

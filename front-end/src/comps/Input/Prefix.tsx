@@ -16,7 +16,7 @@ export function Prefix(props: IProps<IPrefixProps>) {
     class: "",
   });
 
-  const baseClass = twMerge(["border-r-1 border-gray-300 px-2 overflow-hidden"]);
+  const baseClass = twMerge(["border-r-1 border-gray-300 px-2 overflow-hidden flex-none"]);
 
   return (
     <Flex class={twMerge(baseClass, className.get())} onClick={onClick}>

@@ -1,7 +1,7 @@
 import { useProps, useSignal, type Children, type ClassName, type IProps } from "@/utils";
 import { twMerge } from "tailwind-merge";
 import { Item } from "./Item";
-import { ItemVertical } from "./ItemVertical";
+// import { ItemVertical } from "./ItemVertical";
 
 interface IFormProps {
   children: Children;
@@ -32,7 +32,7 @@ export function Form(props: IProps<IFormProps>) {
 }
 
 Form.Item = Item;
-Form.ItemVertical = ItemVertical;
+// Form.ItemVertical = ItemVertical;
 
 interface IRule<T> {
   message: string;

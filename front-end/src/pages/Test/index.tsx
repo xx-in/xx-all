@@ -1,28 +1,44 @@
-import { Flex } from "@comps/Flex";
-import { Layout } from "@comps/Layout";
+import { useDeepSignal, useProps, useSignal, type IProps, type ISignal } from "@/utils";
+import { Input } from "@comps/Input";
+import { List, type IListItem, type IListItemProps } from "@comps/List";
 
 export default function App() {
+  const treeData = useDeepSignal([
+    {
+      text: "1",
+      value: "1",
+    },
+    {
+      text: "2",
+      value: "2",
+      children: [
+        {
+          text: "3",
+          value: "3",
+        },
+        {
+          text: "4",
+          value: "4",
+        },
+      ],
+    },
+  ]);
+
   return (
-    <Layout class="h-screen w-screen flex-col text-black">
-      <Layout.Top class="bg-blue-200">
-        <Flex class="size-full justify-center">上</Flex>
-      </Layout.Top>
-      <Layout.Main>
-        <Layout class="size-full">
-          <Layout.Left class="bg-green-200">
-            <Flex class="size-full justify-center">左</Flex>
-          </Layout.Left>
-          <Layout.Main class="">
-            <Flex class="size-full justify-center bg-amber-200">中</Flex>
-          </Layout.Main>
-          <Layout.Right class="bg-purple-200">
-            <Flex class="size-full justify-center">右</Flex>
-          </Layout.Right>
-        </Layout>
-      </Layout.Main>
-      <Layout.Bottom class="bg-red-200">
-        <Flex class="size-full justify-center">下</Flex>
-      </Layout.Bottom>
-    </Layout>
+    <div>
+      <List ItemComp={A} data={treeData} />
+      <List ItemComp={A} data={treeData} />
+    </div>
+  );
+}
+
+function A(props: any) {
+  const { item } = useProps(props, {});
+
+  return (
+    <div>
+      A:{item.get().text.get()}
+      <Input value={item.get().value}></Input>
+    </div>
   );
 }

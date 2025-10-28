@@ -19,7 +19,7 @@ export function Layout(props: IProps<ILayoutProps>) {
   } = useProps(props, { class: "", direction: "horizontal" });
 
   const baseClass = twMerge([
-    "h-screen w-screen overflow-hidden max-h-screen max-w-screen flex items-stretch",
+    "size-full overflow-hidden max-h-screen max-w-screen flex items-stretch",
   ]);
 
   return (

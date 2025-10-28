@@ -115,7 +115,7 @@ export function Upload(props: IProps<IUploadProps>) {
       />
       <button onClick={handleClick} disabled={disabled.get()}>
         {children || (
-          <Button class={Button.blue} disabled={disabled}>
+          <Button baseClass={Button.blue} disabled={disabled}>
             选择文件
           </Button>
         )}
